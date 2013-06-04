@@ -138,7 +138,7 @@
 		AC9DCE5917362ECB00B1A7A5 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE5817362ECB00B1A7A5 /* vec4.c */; };
 		AC9DCE5E17362ECB00B1A7A5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE5D17362ECB00B1A7A5 /* main.m */; };
 		AC9DCE6117362ECB00B1A7A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */; };
-		AC9DCE6417362ECB00B1A7A5 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6317362ECB00B1A7A5 /* HelloWorldLayer.m */; };
+		AC9DCE6417362ECB00B1A7A5 /* GameplayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6317362ECB00B1A7A5 /* GameplayLayer.m */; };
 		AC9DCE6717362ECB00B1A7A5 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */; };
 		AC9DCE741736372200B1A7A5 /* monster-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE6E1736372200B1A7A5 /* monster-hd.png */; };
 		AC9DCE751736372200B1A7A5 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE6F1736372200B1A7A5 /* monster.png */; };
@@ -433,8 +433,8 @@
 		AC9DCE5D17362ECB00B1A7A5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AC9DCE5F17362ECB00B1A7A5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		AC9DCE6217362ECB00B1A7A5 /* HelloWorldLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		AC9DCE6317362ECB00B1A7A5 /* HelloWorldLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
+		AC9DCE6217362ECB00B1A7A5 /* GameplayLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameplayLayer.h; sourceTree = "<group>"; };
+		AC9DCE6317362ECB00B1A7A5 /* GameplayLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameplayLayer.m; sourceTree = "<group>"; };
 		AC9DCE6517362ECB00B1A7A5 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
 		AC9DCE6E1736372200B1A7A5 /* monster-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "monster-hd.png"; sourceTree = "<group>"; };
@@ -517,8 +517,8 @@
 				AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */,
 				AC9DCE7F1736F25D00B1A7A5 /* GameOverLayer.h */,
 				AC9DCE801736F25D00B1A7A5 /* GameOverLayer.m */,
-				AC9DCE6217362ECB00B1A7A5 /* HelloWorldLayer.h */,
-				AC9DCE6317362ECB00B1A7A5 /* HelloWorldLayer.m */,
+				AC9DCE6217362ECB00B1A7A5 /* GameplayLayer.h */,
+				AC9DCE6317362ECB00B1A7A5 /* GameplayLayer.m */,
 				AC9DCE6517362ECB00B1A7A5 /* IntroLayer.h */,
 				AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */,
 				AC9DCCEA17362EC900B1A7A5 /* libs */,
@@ -1133,7 +1133,7 @@
 				AC9DCE5917362ECB00B1A7A5 /* vec4.c in Sources */,
 				AC9DCE5E17362ECB00B1A7A5 /* main.m in Sources */,
 				AC9DCE6117362ECB00B1A7A5 /* AppDelegate.m in Sources */,
-				AC9DCE6417362ECB00B1A7A5 /* HelloWorldLayer.m in Sources */,
+				AC9DCE6417362ECB00B1A7A5 /* GameplayLayer.m in Sources */,
 				AC9DCE6717362ECB00B1A7A5 /* IntroLayer.m in Sources */,
 				AC9DCE811736F25D00B1A7A5 /* GameOverLayer.m in Sources */,
 			);
@@ -1253,6 +1253,7 @@
 				AC9DCE6C17362ECB00B1A7A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
