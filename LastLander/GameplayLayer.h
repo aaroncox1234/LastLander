@@ -13,7 +13,7 @@
 #import "cocos2d.h"
 
 // HelloWorldLayer
-@interface HelloWorldLayer : CCLayerColor
+@interface GameplayLayer : CCLayerColor
 {
     NSMutableArray *_enemyShips;
     NSMutableArray *_projectiles;

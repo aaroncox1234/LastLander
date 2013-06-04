@@ -8,7 +8,7 @@
 
 
 // Import the interfaces
-#import "HelloWorldLayer.h"
+#import "GameplayLayer.h"
 
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
@@ -17,10 +17,10 @@
 
 #import "GameOverLayer.h"
 
-#pragma mark - HelloWorldLayer
+#pragma mark - GameplayLayer
 
 // HelloWorldLayer implementation
-@implementation HelloWorldLayer
+@implementation GameplayLayer
 
 // Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
@@ -29,7 +29,7 @@
 	CCScene *scene = [CCScene node];
 	
 	// 'layer' is an autorelease object.
-	HelloWorldLayer *layer = [HelloWorldLayer node];
+	GameplayLayer *layer = [GameplayLayer node];
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
