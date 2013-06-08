@@ -22,7 +22,6 @@
 // HelloWorldLayer implementation
 @implementation GameplayLayer
 
-// Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
@@ -33,6 +32,7 @@
 	
 	// add layer as a child to scene
 	[scene addChild: layer];
+	[scene addChild: [LTSDebugLayer getInstance]];
 	
 	// return the scene
 	return scene;
@@ -81,7 +81,18 @@
     float vy = -sin(playerAngle) * playerSpeed * dt;
     CGPoint velocity = ccp(vx, vy);
     _playerShip.position = ccpAdd(_playerShip.position, velocity);
-    
+	
+	// TODO: Don't use bounding box. Create a collision polygon.
+	CGFloat x1 = _playerShip.boundingBox.origin.x;
+	CGFloat y1 = _playerShip.boundingBox.origin.y;
+	CGFloat x2 = _playerShip.boundingBox.origin.x + _playerShip.boundingBox.size.width;
+	CGFloat y2 = _playerShip.boundingBox.origin.y + _playerShip.boundingBox.size.height;
+	
+	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x1, y1) to:ccp(x1, y2)];
+	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x1, y2) to:ccp(x2, y2)];
+	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x2, y2) to:ccp(x2, y1)];
+	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x2, y1) to:ccp(x1, y1)];
+	
     for (CCSprite *enemyShip in _enemyShips) {
         if (CGRectIntersectsRect(_playerShip.boundingBox, enemyShip.boundingBox)) {
             CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
@@ -134,11 +145,9 @@
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
     
-    [_enemyShips release];
     _enemyShips = nil;
 	
 	// don't forget to call "super dealloc"
-	[super dealloc];
 }
 
 -(void) ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
