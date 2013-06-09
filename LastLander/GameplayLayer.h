@@ -20,6 +20,7 @@
     NSMutableArray *_enemyShips;
     NSMutableArray *_projectiles;
     
+	CCSpriteBatchNode *_spriteSheet1;
     CCSprite *_playerShip;
 }
 

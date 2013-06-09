@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */; };
+		AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */; };
 		AC5BCBF8175F067500FC3BF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */; };
 		AC5BCBFB17603A6C00FC3BF0 /* LTSDebugLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5BCBFA17603A6C00FC3BF0 /* LTSDebugLayer.m */; };
 		AC5BCC031760400200FC3BF0 /* LTSLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5BCC021760400200FC3BF0 /* LTSLine.m */; };
@@ -162,6 +164,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LTSGameplaySpriteSheet1.plist; sourceTree = "<group>"; };
+		AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LTSGameplaySpriteSheet1.png; sourceTree = "<group>"; };
 		AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC5BCBF917603A6B00FC3BF0 /* LTSDebugLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSDebugLayer.h; sourceTree = "<group>"; };
 		AC5BCBFA17603A6C00FC3BF0 /* LTSDebugLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSDebugLayer.m; sourceTree = "<group>"; };
@@ -946,6 +950,8 @@
 		AC9DCE6D1736372200B1A7A5 /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */,
+				AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */,
 				AC9DCE8C173A289900B1A7A5 /* ship_B_01-hd.png */,
 				AC9DCE8D173A289900B1A7A5 /* ship_B_01.png */,
 				AC9DCE8A173A285A00B1A7A5 /* ship_R_01-hd.png */,
@@ -1048,6 +1054,8 @@
 				AC9DCE8B173A285A00B1A7A5 /* ship_R_01-hd.png in Resources */,
 				AC9DCE8E173A289900B1A7A5 /* ship_B_01-hd.png in Resources */,
 				AC9DCE8F173A289900B1A7A5 /* ship_B_01.png in Resources */,
+				AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */,
+				AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

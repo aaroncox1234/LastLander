@@ -19,18 +19,14 @@
 
 #pragma mark - GameplayLayer
 
-// HelloWorldLayer implementation
 @implementation GameplayLayer
 
 +(CCScene *) scene
 {
-	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
 	
-	// 'layer' is an autorelease object.
 	GameplayLayer *layer = [GameplayLayer node];
 	
-	// add layer as a child to scene
 	[scene addChild: layer];
 	[scene addChild: [LTSDebugLayer getInstance]];
 	
@@ -39,8 +35,8 @@
 }
 
 - (void) addEnemyShip {
-    
-    CCSprite *enemyShip = [CCSprite spriteWithFile:@"ship_R_01.png"];
+
+    CCSprite *enemyShip = [CCSprite spriteWithSpriteFrameName:@"ship_R_01-hd.png"];
     enemyShip.flipX = false;
     
     enemyShip.tag = 1;
@@ -53,7 +49,7 @@
     int actualY = (arc4random() % rangeY) + minY;
     
     enemyShip.position = ccp(winSize.width + enemyShip.contentSize.width/2, actualY);
-    [self addChild:enemyShip];
+    [_spriteSheet1 addChild:enemyShip];
     
     int minDuration = 5.0;
     int maxDuration = 10.0;
@@ -108,21 +104,22 @@
     }
 }
 
-// on "init" you need to initialize your instance
--(id) init
-{
+- (id)init {
     // TODO: Handle failure intelligently.
     if ((self = [super initWithColor:ccc4(255,255,255,255)])) {
         CGSize winSize = [CCDirector sharedDirector].winSize;
-        
-        CCSprite *background = [CCSprite spriteWithFile:@"LTS_bg_03.png"];
+		
+		_spriteSheet1 = [CCSpriteBatchNode batchNodeWithFile:@"LTSGameplaySpriteSheet1.png" capacity:2];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"LTSGameplaySpriteSheet1.plist"];
+		[self addChild:_spriteSheet1];
+		
+		CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"LTS_bg_03-hd.png"];
         background.position = ccp(winSize.width/2, winSize.height/2);
+        [_spriteSheet1 addChild:background];
         
-        [self addChild:background];
-        
-        _playerShip = [CCSprite spriteWithFile:@"ship_B_01.png"];
+        _playerShip = [CCSprite spriteWithSpriteFrameName:@"ship_B_01-hd.png"];
         _playerShip.position = ccp(-_playerShip.contentSize.width/2, winSize.height/2);
-        [self addChild:_playerShip];
+        [_spriteSheet1 addChild:_playerShip];
     }
     
     [self schedule:@selector(gameLogic:) interval:2.0];
