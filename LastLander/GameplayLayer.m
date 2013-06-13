@@ -15,6 +15,7 @@
 
 #import "SimpleAudioEngine.h"
 
+#import "LTSDebugDrawLayer.h"
 #import "GameOverLayer.h"
 
 #pragma mark - GameplayLayer
@@ -28,15 +29,59 @@
 	GameplayLayer *layer = [GameplayLayer node];
 	
 	[scene addChild: layer];
-	[scene addChild: [LTSDebugLayer getInstance]];
+	[scene addChild: [LTSDebugDrawLayer getSharedInstance]];
 	
 	// return the scene
 	return scene;
 }
 
+- (id)init {
+	
+	self = [super initWithColor:ccc4(255,255,255,255)];
+	
+    if (self) {
+		
+        CGSize winSize = [CCDirector sharedDirector].winSize;
+		
+		_spriteSheet1 = [CCSpriteBatchNode batchNodeWithFile:@"LTSGameplaySpriteSheet1.png" capacity:2];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"LTSGameplaySpriteSheet1.plist"];
+		[self addChild:_spriteSheet1];
+		
+		CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"LTS_bg_03.png"];
+        background.position = ccp(winSize.width/2, winSize.height/2);
+        [_spriteSheet1 addChild:background];
+		
+		_playerShip = [CCSprite spriteWithSpriteFrameName:@"ship_B_01.png"];
+        _playerShip.position = ccp(-_playerShip.contentSize.width/2, winSize.height/2);
+        [_spriteSheet1 addChild:_playerShip];
+    
+		[self schedule:@selector(gameLogic:) interval:2.0];
+    
+		[self schedule:@selector(update:)];
+    
+		self.touchEnabled = YES;
+		
+		_enemyShips = [[NSMutableArray alloc] init];
+		
+		NSArray *playerShipCollisionPolygon = [NSArray arrayWithObjects:
+											   [NSValue valueWithCGPoint:CGPointMake(14.1f, 6.7f)],
+											   [NSValue valueWithCGPoint:CGPointMake(-14.2f, 6.6f)],
+											   [NSValue valueWithCGPoint:CGPointMake(-14.3f, -1.6f)],
+											   [NSValue valueWithCGPoint:CGPointMake(-7.6f, -6.8f)],
+											   [NSValue valueWithCGPoint:CGPointMake(14.4f, -6.8f)],
+											   nil];
+		
+		_collisionComponent1 = [[LTSCollisionComponent alloc] initWithPolygon:playerShipCollisionPolygon];
+    
+		//[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf"];
+    }
+	
+	return self;
+}
+
 - (void) addEnemyShip {
 
-    CCSprite *enemyShip = [CCSprite spriteWithSpriteFrameName:@"ship_R_01-hd.png"];
+    CCSprite *enemyShip = [CCSprite spriteWithSpriteFrameName:@"ship_R_01.png"];
     enemyShip.flipX = false;
     
     enemyShip.tag = 1;
@@ -78,17 +123,6 @@
     CGPoint velocity = ccp(vx, vy);
     _playerShip.position = ccpAdd(_playerShip.position, velocity);
 	
-	// TODO: Don't use bounding box. Create a collision polygon.
-	CGFloat x1 = _playerShip.boundingBox.origin.x;
-	CGFloat y1 = _playerShip.boundingBox.origin.y;
-	CGFloat x2 = _playerShip.boundingBox.origin.x + _playerShip.boundingBox.size.width;
-	CGFloat y2 = _playerShip.boundingBox.origin.y + _playerShip.boundingBox.size.height;
-	
-	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x1, y1) to:ccp(x1, y2)];
-	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x1, y2) to:ccp(x2, y2)];
-	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x2, y2) to:ccp(x2, y1)];
-	[[LTSDebugLayer getInstance] pushLineFrom:ccp(x2, y1) to:ccp(x1, y1)];
-	
     for (CCSprite *enemyShip in _enemyShips) {
         if (CGRectIntersectsRect(_playerShip.boundingBox, enemyShip.boundingBox)) {
             CCScene *gameOverScene = [GameOverLayer sceneWithWon:NO];
@@ -102,37 +136,17 @@
         CCScene *gameOverScene = [GameOverLayer sceneWithWon:YES];
         [[CCDirector sharedDirector] replaceScene:gameOverScene];
     }
-}
-
-- (id)init {
-    // TODO: Handle failure intelligently.
-    if ((self = [super initWithColor:ccc4(255,255,255,255)])) {
-        CGSize winSize = [CCDirector sharedDirector].winSize;
+	
+	NSMutableArray *worldPolygon = [NSMutableArray arrayWithCapacity:[_collisionComponent1.polygon count]];
 		
-		_spriteSheet1 = [CCSpriteBatchNode batchNodeWithFile:@"LTSGameplaySpriteSheet1.png" capacity:2];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"LTSGameplaySpriteSheet1.plist"];
-		[self addChild:_spriteSheet1];
+	for (NSValue *localPoint in _collisionComponent1.polygon) {
 		
-		CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"LTS_bg_03-hd.png"];
-        background.position = ccp(winSize.width/2, winSize.height/2);
-        [_spriteSheet1 addChild:background];
-        
-        _playerShip = [CCSprite spriteWithSpriteFrameName:@"ship_B_01-hd.png"];
-        _playerShip.position = ccp(-_playerShip.contentSize.width/2, winSize.height/2);
-        [_spriteSheet1 addChild:_playerShip];
-    }
-    
-    [self schedule:@selector(gameLogic:) interval:2.0];
-    
-    [self schedule:@selector(update:)];
-    
-    self.touchEnabled = YES;
-    
-    _enemyShips = [[NSMutableArray alloc] init];
-    
-    //[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf"];
-    
-	return self;
+		CGPoint worldPoint = [_playerShip convertToWorldSpaceAR:[localPoint CGPointValue]];
+		
+		[worldPolygon addObject:[NSValue valueWithCGPoint:worldPoint]];
+	}
+	
+	[[LTSDebugDrawLayer getSharedInstance] drawPolygon:worldPolygon];
 }
 
 // on "dealloc" you need to release all your retained objects

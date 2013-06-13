@@ -10,8 +10,6 @@
 		AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */; };
 		AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */; };
 		AC5BCBF8175F067500FC3BF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */; };
-		AC5BCBFB17603A6C00FC3BF0 /* LTSDebugLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5BCBFA17603A6C00FC3BF0 /* LTSDebugLayer.m */; };
-		AC5BCC031760400200FC3BF0 /* LTSLine.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5BCC021760400200FC3BF0 /* LTSLine.m */; };
 		AC5BCC061763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */; };
 		AC9DCCBE17362EC900B1A7A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9DCCBD17362EC900B1A7A5 /* QuartzCore.framework */; };
 		AC9DCCC017362EC900B1A7A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9DCCBF17362EC900B1A7A5 /* OpenGLES.framework */; };
@@ -146,31 +144,25 @@
 		AC9DCE6117362ECB00B1A7A5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */; };
 		AC9DCE6417362ECB00B1A7A5 /* GameplayLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6317362ECB00B1A7A5 /* GameplayLayer.m */; };
 		AC9DCE6717362ECB00B1A7A5 /* IntroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */; };
-		AC9DCE741736372200B1A7A5 /* monster-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE6E1736372200B1A7A5 /* monster-hd.png */; };
-		AC9DCE751736372200B1A7A5 /* monster.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE6F1736372200B1A7A5 /* monster.png */; };
-		AC9DCE761736372200B1A7A5 /* player-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE701736372200B1A7A5 /* player-hd.png */; };
-		AC9DCE771736372200B1A7A5 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE711736372200B1A7A5 /* player.png */; };
-		AC9DCE781736372200B1A7A5 /* projectile-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE721736372200B1A7A5 /* projectile-hd.png */; };
-		AC9DCE791736372200B1A7A5 /* projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE731736372200B1A7A5 /* projectile.png */; };
 		AC9DCE7D1736372A00B1A7A5 /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE7B1736372A00B1A7A5 /* background-music-aac.caf */; };
 		AC9DCE7E1736372A00B1A7A5 /* pew-pew-lei.caf in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE7C1736372A00B1A7A5 /* pew-pew-lei.caf */; };
 		AC9DCE811736F25D00B1A7A5 /* GameOverLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DCE801736F25D00B1A7A5 /* GameOverLayer.m */; };
 		AC9DCE85173A1BBF00B1A7A5 /* LTS_bg_03.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE84173A1BBF00B1A7A5 /* LTS_bg_03.png */; };
-		AC9DCE87173A1CDC00B1A7A5 /* ship_R_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE86173A1CDC00B1A7A5 /* ship_R_01.png */; };
 		AC9DCE89173A24EF00B1A7A5 /* LTS_bg_03-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE88173A24EF00B1A7A5 /* LTS_bg_03-hd.png */; };
 		AC9DCE8B173A285A00B1A7A5 /* ship_R_01-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE8A173A285A00B1A7A5 /* ship_R_01-hd.png */; };
-		AC9DCE8E173A289900B1A7A5 /* ship_B_01-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE8C173A289900B1A7A5 /* ship_B_01-hd.png */; };
 		AC9DCE8F173A289900B1A7A5 /* ship_B_01.png in Resources */ = {isa = PBXBuildFile; fileRef = AC9DCE8D173A289900B1A7A5 /* ship_B_01.png */; };
+		ACB4FF9A17698D3500349646 /* LTSGameplaySpriteSheet1-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = ACB4FF9717698D3500349646 /* LTSGameplaySpriteSheet1-hd.plist */; };
+		ACB4FF9B17698D3500349646 /* LTSGameplaySpriteSheet1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB4FF9817698D3500349646 /* LTSGameplaySpriteSheet1-hd.png */; };
+		ACB4FF9C17698D3500349646 /* ship_R_01.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB4FF9917698D3500349646 /* ship_R_01.png */; };
+		ACB83A7E17656B4D007E459D /* LTSDebugDrawLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB83A7D17656B4D007E459D /* LTSDebugDrawLayer.m */; };
+		ACB83A81176583E7007E459D /* LTSCollisionComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = ACB83A80176583E7007E459D /* LTSCollisionComponent.m */; };
+		ACB83A8317682148007E459D /* ship_B_01-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = ACB83A8217682148007E459D /* ship_B_01-hd.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LTSGameplaySpriteSheet1.plist; sourceTree = "<group>"; };
 		AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LTSGameplaySpriteSheet1.png; sourceTree = "<group>"; };
 		AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		AC5BCBF917603A6B00FC3BF0 /* LTSDebugLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSDebugLayer.h; sourceTree = "<group>"; };
-		AC5BCBFA17603A6C00FC3BF0 /* LTSDebugLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSDebugLayer.m; sourceTree = "<group>"; };
-		AC5BCC011760400200FC3BF0 /* LTSLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSLine.h; sourceTree = "<group>"; };
-		AC5BCC021760400200FC3BF0 /* LTSLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSLine.m; sourceTree = "<group>"; };
 		AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libisimulate-4.x-opengl.a"; path = "libs/iSimulate/libisimulate-4.x-opengl.a"; sourceTree = "<group>"; };
 		AC9DCCBA17362EC900B1A7A5 /* LastLander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastLander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9DCCBD17362EC900B1A7A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -451,22 +443,22 @@
 		AC9DCE6317362ECB00B1A7A5 /* GameplayLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameplayLayer.m; sourceTree = "<group>"; };
 		AC9DCE6517362ECB00B1A7A5 /* IntroLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroLayer.h; sourceTree = "<group>"; };
 		AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroLayer.m; sourceTree = "<group>"; };
-		AC9DCE6E1736372200B1A7A5 /* monster-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "monster-hd.png"; sourceTree = "<group>"; };
-		AC9DCE6F1736372200B1A7A5 /* monster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monster.png; sourceTree = "<group>"; };
-		AC9DCE701736372200B1A7A5 /* player-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player-hd.png"; sourceTree = "<group>"; };
-		AC9DCE711736372200B1A7A5 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
-		AC9DCE721736372200B1A7A5 /* projectile-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "projectile-hd.png"; sourceTree = "<group>"; };
-		AC9DCE731736372200B1A7A5 /* projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = projectile.png; sourceTree = "<group>"; };
 		AC9DCE7B1736372A00B1A7A5 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
 		AC9DCE7C1736372A00B1A7A5 /* pew-pew-lei.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pew-pew-lei.caf"; sourceTree = "<group>"; };
 		AC9DCE7F1736F25D00B1A7A5 /* GameOverLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverLayer.h; sourceTree = "<group>"; };
 		AC9DCE801736F25D00B1A7A5 /* GameOverLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverLayer.m; sourceTree = "<group>"; };
 		AC9DCE84173A1BBF00B1A7A5 /* LTS_bg_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LTS_bg_03.png; sourceTree = "<group>"; };
-		AC9DCE86173A1CDC00B1A7A5 /* ship_R_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship_R_01.png; sourceTree = "<group>"; };
 		AC9DCE88173A24EF00B1A7A5 /* LTS_bg_03-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LTS_bg_03-hd.png"; sourceTree = "<group>"; };
 		AC9DCE8A173A285A00B1A7A5 /* ship_R_01-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship_R_01-hd.png"; sourceTree = "<group>"; };
-		AC9DCE8C173A289900B1A7A5 /* ship_B_01-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship_B_01-hd.png"; sourceTree = "<group>"; };
 		AC9DCE8D173A289900B1A7A5 /* ship_B_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship_B_01.png; sourceTree = "<group>"; };
+		ACB4FF9717698D3500349646 /* LTSGameplaySpriteSheet1-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LTSGameplaySpriteSheet1-hd.plist"; sourceTree = "<group>"; };
+		ACB4FF9817698D3500349646 /* LTSGameplaySpriteSheet1-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LTSGameplaySpriteSheet1-hd.png"; sourceTree = "<group>"; };
+		ACB4FF9917698D3500349646 /* ship_R_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship_R_01.png; sourceTree = "<group>"; };
+		ACB83A7C17656B4D007E459D /* LTSDebugDrawLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSDebugDrawLayer.h; sourceTree = "<group>"; };
+		ACB83A7D17656B4D007E459D /* LTSDebugDrawLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSDebugDrawLayer.m; sourceTree = "<group>"; };
+		ACB83A7F176583E6007E459D /* LTSCollisionComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCollisionComponent.h; sourceTree = "<group>"; };
+		ACB83A80176583E7007E459D /* LTSCollisionComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCollisionComponent.m; sourceTree = "<group>"; };
+		ACB83A8217682148007E459D /* ship_B_01-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ship_B_01-hd.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,15 +484,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AC5BCBFF17603EDC00FC3BF0 /* LTSCore */ = {
+		AC5BCBFF17603EDC00FC3BF0 /* LTS */ = {
 			isa = PBXGroup;
 			children = (
-				AC5BCBF917603A6B00FC3BF0 /* LTSDebugLayer.h */,
-				AC5BCBFA17603A6C00FC3BF0 /* LTSDebugLayer.m */,
-				AC5BCC011760400200FC3BF0 /* LTSLine.h */,
-				AC5BCC021760400200FC3BF0 /* LTSLine.m */,
+				ACB83A7C17656B4D007E459D /* LTSDebugDrawLayer.h */,
+				ACB83A7D17656B4D007E459D /* LTSDebugDrawLayer.m */,
+				ACB83A7F176583E6007E459D /* LTSCollisionComponent.h */,
+				ACB83A80176583E7007E459D /* LTSCollisionComponent.m */,
 			);
-			name = LTSCore;
+			name = LTS;
 			sourceTree = "<group>";
 		};
 		AC5BCC041763C4DF00FC3BF0 /* iSimulate */ = {
@@ -549,7 +541,7 @@
 		AC9DCCD117362EC900B1A7A5 /* LastLander */ = {
 			isa = PBXGroup;
 			children = (
-				AC5BCBFF17603EDC00FC3BF0 /* LTSCore */,
+				AC5BCBFF17603EDC00FC3BF0 /* LTS */,
 				AC9DCE5F17362ECB00B1A7A5 /* AppDelegate.h */,
 				AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */,
 				AC9DCE7F1736F25D00B1A7A5 /* GameOverLayer.h */,
@@ -950,20 +942,16 @@
 		AC9DCE6D1736372200B1A7A5 /* Art */ = {
 			isa = PBXGroup;
 			children = (
+				ACB4FF9717698D3500349646 /* LTSGameplaySpriteSheet1-hd.plist */,
+				ACB4FF9817698D3500349646 /* LTSGameplaySpriteSheet1-hd.png */,
+				ACB4FF9917698D3500349646 /* ship_R_01.png */,
+				AC9DCE88173A24EF00B1A7A5 /* LTS_bg_03-hd.png */,
+				AC9DCE84173A1BBF00B1A7A5 /* LTS_bg_03.png */,
 				AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */,
 				AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */,
-				AC9DCE8C173A289900B1A7A5 /* ship_B_01-hd.png */,
+				ACB83A8217682148007E459D /* ship_B_01-hd.png */,
 				AC9DCE8D173A289900B1A7A5 /* ship_B_01.png */,
 				AC9DCE8A173A285A00B1A7A5 /* ship_R_01-hd.png */,
-				AC9DCE88173A24EF00B1A7A5 /* LTS_bg_03-hd.png */,
-				AC9DCE86173A1CDC00B1A7A5 /* ship_R_01.png */,
-				AC9DCE84173A1BBF00B1A7A5 /* LTS_bg_03.png */,
-				AC9DCE6E1736372200B1A7A5 /* monster-hd.png */,
-				AC9DCE6F1736372200B1A7A5 /* monster.png */,
-				AC9DCE701736372200B1A7A5 /* player-hd.png */,
-				AC9DCE711736372200B1A7A5 /* player.png */,
-				AC9DCE721736372200B1A7A5 /* projectile-hd.png */,
-				AC9DCE731736372200B1A7A5 /* projectile.png */,
 			);
 			path = Art;
 			sourceTree = "<group>";
@@ -1040,22 +1028,18 @@
 				AC9DCCE617362EC900B1A7A5 /* Icon@2x.png in Resources */,
 				AC9DCCE917362EC900B1A7A5 /* iTunesArtwork in Resources */,
 				AC9DCE3F17362ECB00B1A7A5 /* ChangeLog in Resources */,
-				AC9DCE741736372200B1A7A5 /* monster-hd.png in Resources */,
-				AC9DCE751736372200B1A7A5 /* monster.png in Resources */,
-				AC9DCE761736372200B1A7A5 /* player-hd.png in Resources */,
-				AC9DCE771736372200B1A7A5 /* player.png in Resources */,
-				AC9DCE781736372200B1A7A5 /* projectile-hd.png in Resources */,
-				AC9DCE791736372200B1A7A5 /* projectile.png in Resources */,
 				AC9DCE7D1736372A00B1A7A5 /* background-music-aac.caf in Resources */,
 				AC9DCE7E1736372A00B1A7A5 /* pew-pew-lei.caf in Resources */,
 				AC9DCE85173A1BBF00B1A7A5 /* LTS_bg_03.png in Resources */,
-				AC9DCE87173A1CDC00B1A7A5 /* ship_R_01.png in Resources */,
 				AC9DCE89173A24EF00B1A7A5 /* LTS_bg_03-hd.png in Resources */,
 				AC9DCE8B173A285A00B1A7A5 /* ship_R_01-hd.png in Resources */,
-				AC9DCE8E173A289900B1A7A5 /* ship_B_01-hd.png in Resources */,
 				AC9DCE8F173A289900B1A7A5 /* ship_B_01.png in Resources */,
 				AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */,
 				AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */,
+				ACB83A8317682148007E459D /* ship_B_01-hd.png in Resources */,
+				ACB4FF9A17698D3500349646 /* LTSGameplaySpriteSheet1-hd.plist in Resources */,
+				ACB4FF9B17698D3500349646 /* LTSGameplaySpriteSheet1-hd.png in Resources */,
+				ACB4FF9C17698D3500349646 /* ship_R_01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,8 +1162,8 @@
 				AC9DCE6417362ECB00B1A7A5 /* GameplayLayer.m in Sources */,
 				AC9DCE6717362ECB00B1A7A5 /* IntroLayer.m in Sources */,
 				AC9DCE811736F25D00B1A7A5 /* GameOverLayer.m in Sources */,
-				AC5BCBFB17603A6C00FC3BF0 /* LTSDebugLayer.m in Sources */,
-				AC5BCC031760400200FC3BF0 /* LTSLine.m in Sources */,
+				ACB83A7E17656B4D007E459D /* LTSDebugDrawLayer.m in Sources */,
+				ACB83A81176583E7007E459D /* LTSCollisionComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
