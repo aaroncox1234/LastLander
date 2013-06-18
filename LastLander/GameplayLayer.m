@@ -63,15 +63,36 @@
 		
 		_enemyShips = [[NSMutableArray alloc] init];
 		
-		NSArray *playerShipCollisionPolygon = [NSArray arrayWithObjects:
+		/*NSArray *playerShipCollisionPolygon = [NSArray arrayWithObjects:
 											   [NSValue valueWithCGPoint:CGPointMake(14.1f, 6.7f)],
 											   [NSValue valueWithCGPoint:CGPointMake(-14.2f, 6.6f)],
 											   [NSValue valueWithCGPoint:CGPointMake(-14.3f, -1.6f)],
 											   [NSValue valueWithCGPoint:CGPointMake(-7.6f, -6.8f)],
 											   [NSValue valueWithCGPoint:CGPointMake(14.4f, -6.8f)],
-											   nil];
+											   nil];*/
 		
-		_collisionComponent1 = [[LTSCollisionComponent alloc] initWithPolygon:playerShipCollisionPolygon];
+		_testPolygon1 = [NSArray arrayWithObjects:
+								  [NSValue valueWithCGPoint:CGPointMake(71.4f, 88.1f)],
+								  [NSValue valueWithCGPoint:CGPointMake(103.7f, 110.3f)],
+								  [NSValue valueWithCGPoint:CGPointMake(75.6f, 137.1f)],
+								  [NSValue valueWithCGPoint:CGPointMake(50.7f, 122.6f)],
+								  [NSValue valueWithCGPoint:CGPointMake(48.3f, 95.5f)],
+								  nil];
+		
+//		_testPolygon2 = [[LTSCollisionComponent alloc] initWithPolygon:debugPolygon1];
+		
+		_testPolygon2 = [NSArray arrayWithObjects:
+								  [NSValue valueWithCGPoint:CGPointMake(169.1f, 72.8f)],
+								  [NSValue valueWithCGPoint:CGPointMake(195.5f, 70.7f)],
+								  [NSValue valueWithCGPoint:CGPointMake(222.6f, 106.3f)],
+								  [NSValue valueWithCGPoint:CGPointMake(204.5f, 141.0f)],
+								  [NSValue valueWithCGPoint:CGPointMake(178.5f, 140.0f)],
+								  [NSValue valueWithCGPoint:CGPointMake(160.5f, 122.6f)],
+								  [NSValue valueWithCGPoint:CGPointMake(155.7f, 103.9f)],
+								  [NSValue valueWithCGPoint:CGPointMake(155.0f, 77.8f)],
+								  nil];
+		
+//		_collisionComponent2 = [[LTSCollisionComponent alloc] initWithPolygon:debugPolygon2];
     
 		//[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf"];
     }
@@ -81,7 +102,7 @@
 
 - (void) addEnemyShip {
 
-    CCSprite *enemyShip = [CCSprite spriteWithSpriteFrameName:@"ship_R_01.png"];
+    /*CCSprite *enemyShip = [CCSprite spriteWithSpriteFrameName:@"ship_R_01.png"];
     enemyShip.flipX = false;
     
     enemyShip.tag = 1;
@@ -106,7 +127,7 @@
         [_enemyShips addObject:enemyShip];
         [node removeFromParentAndCleanup:YES];
     }];
-    [enemyShip runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+    [enemyShip runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];*/
     
 }
 
@@ -116,7 +137,7 @@
 
 -(void)update:(ccTime)dt {
     
-    float playerSpeed = 75.0f;
+    float playerSpeed = 0.0f;
     float playerAngle = _playerShip.rotation * M_PI / 180.0f;
     float vx = cos(playerAngle) * playerSpeed * dt;
     float vy = -sin(playerAngle) * playerSpeed * dt;
@@ -137,16 +158,64 @@
         [[CCDirector sharedDirector] replaceScene:gameOverScene];
     }
 	
-	NSMutableArray *worldPolygon = [NSMutableArray arrayWithCapacity:[_collisionComponent1.polygon count]];
+	/*NSMutableArray *worldPolygon = [NSMutableArray arrayWithCapacity:[_collisionComponent1.polygon count]];
 		
 	for (NSValue *localPoint in _collisionComponent1.polygon) {
 		
 		CGPoint worldPoint = [_playerShip convertToWorldSpaceAR:[localPoint CGPointValue]];
 		
 		[worldPolygon addObject:[NSValue valueWithCGPoint:worldPoint]];
+	}*/
+	
+	// TODO: start with AABB test of sprites
+	
+	BOOL collisionDetected = NO;
+	
+	int polygon1Count = [_testPolygon1 count];
+	int polygon2Count = [_testPolygon2 count];
+	
+	for (int poly1StartIdx = 0; poly1StartIdx < polygon1Count; poly1StartIdx++) {
+		
+		int poly1EndIdx = poly1StartIdx + 1;
+		if (poly1EndIdx >= polygon1Count) {
+			
+			poly1EndIdx = 0;
+		}
+		
+		CGPoint poly1StartPoint = [[_testPolygon1 objectAtIndex:poly1StartIdx] CGPointValue];
+		CGPoint poly1EndPoint = [[_testPolygon1 objectAtIndex:poly1EndIdx] CGPointValue];
+		
+		for (int poly2StartIdx = 0; poly2StartIdx < polygon2Count; poly2StartIdx++) {
+			
+			int poly2EndIdx = poly2StartIdx + 1;
+			if (poly2EndIdx >= polygon2Count) {
+				
+				poly2EndIdx = 0;
+			}
+			
+			CGPoint poly2StartPoint = [[_testPolygon2 objectAtIndex:poly2StartIdx] CGPointValue];
+			CGPoint poly2EndPoint = [[_testPolygon2 objectAtIndex:poly2EndIdx] CGPointValue];
+			
+			if (ccpSegmentIntersect(poly1StartPoint, poly1EndPoint, poly2StartPoint, poly2EndPoint)) {
+				
+				collisionDetected = YES;
+				
+				// TODO return out, no need to keep the bool around
+			}
+		}
 	}
 	
-	[[LTSDebugDrawLayer getSharedInstance] drawPolygon:worldPolygon];
+	if (collisionDetected) {
+		
+		NSLog(@"COLLISION");
+	}
+	else {
+		
+		NSLog(@"NOTHING");
+		
+	}
+	[[LTSDebugDrawLayer getSharedInstance] drawPolygon:_testPolygon1];
+	[[LTSDebugDrawLayer getSharedInstance] drawPolygon:_testPolygon2];
 }
 
 // on "dealloc" you need to release all your retained objects
@@ -176,6 +245,35 @@
         _playerShip.rotation -= angle;
     }
     
+	NSMutableArray *newPolygon = [NSMutableArray array];
+	
+	for (NSValue *pointAsValue in _testPolygon1) {
+		
+		CGPoint point = [pointAsValue CGPointValue];
+		
+		if (location.x > winSize.width * 0.75)
+		{
+			point.x += 10.0f;
+		}
+		if (location.x < winSize.width * 0.25)
+		{
+			point.x -= 10.0f;
+		}
+
+		if (location.y > winSize.height * 0.75)
+		{
+			point.y += 10.0f;
+		}
+		if (location.y < winSize.height * 0.25)
+		{
+			point.y -= 10.0f;
+		}
+		
+		[newPolygon addObject:[NSValue valueWithCGPoint:point]];
+	}
+	
+	_testPolygon1 = newPolygon;
+	
     //[[SimpleAudioEngine sharedEngine] playEffect:@"pew-pew-lei.caf"];
 }
 

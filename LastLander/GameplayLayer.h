@@ -25,6 +25,9 @@
 	
 	LTSCollisionComponent *_collisionComponent1;
 	LTSCollisionComponent *_collisionComponent2;
+	
+	NSArray *_testPolygon1;
+	NSArray *_testPolygon2;
 }
 
 +(CCScene *) scene;
