@@ -12,8 +12,6 @@
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
 
-#import "LTSCollisionComponent.h"
-
 // HelloWorldLayer
 @interface GameplayLayer : CCLayerColor
 {
@@ -22,9 +20,6 @@
     
 	CCSpriteBatchNode *_spriteSheet1;
     CCSprite *_playerShip;
-	
-	LTSCollisionComponent *_collisionComponent1;
-	LTSCollisionComponent *_collisionComponent2;
 	
 	NSArray *_testPolygon1;
 	NSArray *_testPolygon2;

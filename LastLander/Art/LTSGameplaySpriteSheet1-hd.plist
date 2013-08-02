@@ -11,7 +11,7 @@
 	</dict>
 	<key>frames</key>
 	<dict>
-		<key>LTS_bg_03.png</key>
+		<key>LTS_bg_03-hd.png</key>
 		<dict>
 			<key>x</key>
 			<integer>1</integer>
@@ -30,10 +30,67 @@
 			<key>originalHeight</key>
 			<integer>640</integer>
 		</dict>
-		<key>ship_B_01.png</key>
+		<key>LTS_plat_01-hd.png</key>
 		<dict>
 			<key>x</key>
 			<integer>1</integer>
+			<key>y</key>
+			<integer>642</integer>
+			<key>width</key>
+			<integer>198</integer>
+			<key>height</key>
+			<integer>299</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-0.5</real>
+			<key>originalWidth</key>
+			<integer>200</integer>
+			<key>originalHeight</key>
+			<integer>300</integer>
+		</dict>
+		<key>LTS_plat_02-hd.png</key>
+		<dict>
+			<key>x</key>
+			<integer>347</integer>
+			<key>y</key>
+			<integer>642</integer>
+			<key>width</key>
+			<integer>128</integer>
+			<key>height</key>
+			<integer>159</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-0.5</real>
+			<key>originalWidth</key>
+			<integer>130</integer>
+			<key>originalHeight</key>
+			<integer>160</integer>
+		</dict>
+		<key>LTS_plat_03-hd.png</key>
+		<dict>
+			<key>x</key>
+			<integer>200</integer>
+			<key>y</key>
+			<integer>642</integer>
+			<key>width</key>
+			<integer>146</integer>
+			<key>height</key>
+			<integer>249</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>-0.5</real>
+			<key>originalWidth</key>
+			<integer>150</integer>
+			<key>originalHeight</key>
+			<integer>250</integer>
+		</dict>
+		<key>ship_B_01-hd.png</key>
+		<dict>
+			<key>x</key>
+			<integer>537</integer>
 			<key>y</key>
 			<integer>642</integer>
 			<key>width</key>
@@ -49,12 +106,12 @@
 			<key>originalHeight</key>
 			<integer>30</integer>
 		</dict>
-		<key>ship_R_01.png</key>
+		<key>ship_R_01-hd.png</key>
 		<dict>
 			<key>x</key>
-			<integer>962</integer>
+			<integer>476</integer>
 			<key>y</key>
-			<integer>1</integer>
+			<integer>642</integer>
 			<key>width</key>
 			<integer>60</integer>
 			<key>height</key>
@@ -67,6 +124,44 @@
 			<integer>60</integer>
 			<key>originalHeight</key>
 			<integer>30</integer>
+		</dict>
+		<key>spawn_R_frame1.png</key>
+		<dict>
+			<key>x</key>
+			<integer>614</integer>
+			<key>y</key>
+			<integer>642</integer>
+			<key>width</key>
+			<integer>15</integer>
+			<key>height</key>
+			<integer>15</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>15</integer>
+			<key>originalHeight</key>
+			<integer>15</integer>
+		</dict>
+		<key>spawn_R_frame2.png</key>
+		<dict>
+			<key>x</key>
+			<integer>598</integer>
+			<key>y</key>
+			<integer>642</integer>
+			<key>width</key>
+			<integer>15</integer>
+			<key>height</key>
+			<integer>15</integer>
+			<key>offsetX</key>
+			<real>0</real>
+			<key>offsetY</key>
+			<real>0</real>
+			<key>originalWidth</key>
+			<integer>15</integer>
+			<key>originalHeight</key>
+			<integer>15</integer>
 		</dict>
 	</dict>
 </dict>

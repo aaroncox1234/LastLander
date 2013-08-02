@@ -1,0 +1,38 @@
+PHASE 1 - Ship Control
+
+next up
+	red ships
+		fly to the left with speed variation (define speed variation as class member)
+		play explosion animation during dying state, then go to "waiting to spawn"
+		go to "waiting to spawn" state when off screen, store off screen
+
+blue ship
+	spawn on spawn point
+	start take off by pressing middle of screen
+	hold sides of screen to steer
+	land on platform at narrow angle
+	explode on crash
+
+game
+	fail when player crashes
+	create level 1
+		3 platforms
+		red ship zone
+		1 player spawns from side edge of screen
+
+
+
+
+
+
+PHASE LATER
+
+
+modes
+	finish all tasks to finish level
+	free mode (leaderboards)
+scoring
+	long boosts, near misses, collect dots, perform loops
+	
+optimization
+	broad phase collision detection
