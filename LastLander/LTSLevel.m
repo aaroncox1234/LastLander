@@ -12,7 +12,7 @@
 
 @interface LTSLevel ()
 
-- (id)initWithPlatforms:(NSArray *)platforms redShipSpawnZone:(CGRect)redShipSpawnZone blueShipSpawnZone:(CGRect)blueShipSpawnZone redShipSpawnIntervalMin:(float)redShipSpawnIntervalMin redShipSpawnIntervalMax:(float)redShipSpawnIntervalMax;
+- (id)initWithPlatforms:(NSArray *)platforms redShipSpawnZone:(CGRect)redShipSpawnZone blueShipSpawnZone:(CGRect)blueShipSpawnZone;
 
 @end
 
@@ -28,13 +28,10 @@
 	CGRect redShipSpawnZone = CGRectMake(450.0f, 0.0f, 450.0f, 150.0f);
 	CGRect blueShipSpawnZone = CGRectMake(15.0f, 50.0f, 50.0f, 70.0f);
 	
-	float redShipSpawnIntervalMin = RED_SHIP_SPAWN_INTERVAL_MIN;
-	float redShipSpawnIntervalMax = RED_SHIP_SPAWN_INTERVAL_MAX;
-	
-	return [[self alloc] initWithPlatforms:platforms redShipSpawnZone:redShipSpawnZone blueShipSpawnZone:blueShipSpawnZone redShipSpawnIntervalMin:redShipSpawnIntervalMin redShipSpawnIntervalMax:redShipSpawnIntervalMax];
+	return [[self alloc] initWithPlatforms:platforms redShipSpawnZone:redShipSpawnZone blueShipSpawnZone:blueShipSpawnZone];
 }
 
-- (id)initWithPlatforms:(NSArray *)platforms redShipSpawnZone:(CGRect)redShipSpawnZone blueShipSpawnZone:(CGRect)blueShipSpawnZone redShipSpawnIntervalMin:(float)redShipSpawnIntervalMin redShipSpawnIntervalMax:(float)redShipSpawnIntervalMax {
+- (id)initWithPlatforms:(NSArray *)platforms redShipSpawnZone:(CGRect)redShipSpawnZone blueShipSpawnZone:(CGRect)blueShipSpawnZone {
 	
 	self = [super init];
 	
@@ -44,8 +41,10 @@
 		_redShipSpawnZone = redShipSpawnZone;
 		_redShipSpawnZoneOccupied = NO;
 		_blueShipSpawnZone = blueShipSpawnZone;
-		_redShipSpawnIntervalMin = redShipSpawnIntervalMin;
-		_redShipSpawnIntervalMax = redShipSpawnIntervalMax;
+		_redShipSpawnIntervalMin = RED_SHIP_SPAWN_INTERVAL_MIN;
+		_redShipSpawnIntervalMax = RED_SHIP_SPAWN_INTERVAL_MAX;
+		_redShipSpeedMin = RED_SHIP_SPEED_MIN;
+		_redShipSpeedMax = RED_SHIP_SPEED_MAX;
 	}
 	
 	return self;

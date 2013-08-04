@@ -1,11 +1,5 @@
 PHASE 1 - Ship Control
 
-next up
-	red ships
-		fly to the left with speed variation (define speed variation as class member)
-		play explosion animation during dying state, then go to "waiting to spawn"
-		go to "waiting to spawn" state when off screen, store off screen
-
 blue ship
 	spawn on spawn point
 	start take off by pressing middle of screen
@@ -36,3 +30,6 @@ scoring
 	
 optimization
 	broad phase collision detection
+	
+cleanup
+	pull position off of sprite. update the sprite position, but don't store position there. might be hopeless, given that sprite transforms our collision poly...

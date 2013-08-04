@@ -14,6 +14,7 @@
 		AC5BCBF8175F067500FC3BF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */; };
 		AC5BCC061763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */; };
 		AC9DBC0317AB632B00100BCF /* LTSSpawnWarningBlip.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */; };
+		AC9DBC0617AEEEC900100BCF /* LTSExplosion.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */; };
 		AC9DCCBE17362EC900B1A7A5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9DCCBD17362EC900B1A7A5 /* QuartzCore.framework */; };
 		AC9DCCC017362EC900B1A7A5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9DCCBF17362EC900B1A7A5 /* OpenGLES.framework */; };
 		AC9DCCC217362EC900B1A7A5 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9DCCC117362EC900B1A7A5 /* OpenAL.framework */; };
@@ -171,6 +172,8 @@
 		AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libisimulate-4.x-opengl.a"; path = "libs/iSimulate/libisimulate-4.x-opengl.a"; sourceTree = "<group>"; };
 		AC9DBC0117AB632B00100BCF /* LTSSpawnWarningBlip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSSpawnWarningBlip.h; sourceTree = "<group>"; };
 		AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSSpawnWarningBlip.m; sourceTree = "<group>"; };
+		AC9DBC0417AEEEC800100BCF /* LTSExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSExplosion.h; sourceTree = "<group>"; };
+		AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSExplosion.m; sourceTree = "<group>"; };
 		AC9DCCBA17362EC900B1A7A5 /* LastLander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastLander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC9DCCBD17362EC900B1A7A5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AC9DCCBF17362EC900B1A7A5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -512,6 +515,8 @@
 				AC3B05EE17853F72009FE384 /* LTSRandom.m */,
 				AC9DBC0117AB632B00100BCF /* LTSSpawnWarningBlip.h */,
 				AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */,
+				AC9DBC0417AEEEC800100BCF /* LTSExplosion.h */,
+				AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */,
 			);
 			name = LTS;
 			sourceTree = "<group>";
@@ -1180,6 +1185,7 @@
 				AC3B05B91777D61B009FE384 /* LTSPlatform.m in Sources */,
 				AC3B05EF17853F72009FE384 /* LTSRandom.m in Sources */,
 				AC9DBC0317AB632B00100BCF /* LTSSpawnWarningBlip.m in Sources */,
+				AC9DBC0617AEEEC900100BCF /* LTSExplosion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

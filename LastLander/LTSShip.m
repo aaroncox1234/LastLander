@@ -16,8 +16,11 @@ static const int STATE_FLYING = 2;
 static const int STATE_DYING = 3;
 
 @interface LTSShip ()
+{
+	CGFloat _spawnDirection;
+}
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon;
+- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon spawnDirection:(CGFloat)spawnDirection;
 
 - (void)changeState:(int)newState;
 - (void)enterState:(int)state;
@@ -40,9 +43,9 @@ static const int STATE_DYING = 3;
 						[NSValue valueWithCGPoint:CGPointMake(-7.6f, -6.8f)],
 						[NSValue valueWithCGPoint:CGPointMake(14.4f, -6.8f)],
 						[NSValue valueWithCGPoint:CGPointMake(14.1f, 6.7f)],
-						 nil];
+						nil];
 	
-	return [[self alloc] initWithSprite:sprite polygon:polygon];
+	return [[self alloc] initWithSprite:sprite polygon:polygon spawnDirection:1.0f];
 }
 
 + (LTSShip *)createRedShipWithBatchNode:(CCSpriteBatchNode *)batchNode {
@@ -60,10 +63,10 @@ static const int STATE_DYING = 3;
 						[NSValue valueWithCGPoint:CGPointMake(7.1f, -6.7f)],
 						nil];
 	
-	return [[self alloc] initWithSprite:sprite polygon:polygon];
+	return [[self alloc] initWithSprite:sprite polygon:polygon spawnDirection:-1.0f];
 }
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon {
+- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon spawnDirection:(CGFloat)spawnDirection {
 	
 	self = [super init];
 	
@@ -78,6 +81,8 @@ static const int STATE_DYING = 3;
 		
 		_isHitOtherShip = NO;
 		_isHitPlatform = NO;
+		
+		_spawnDirection = spawnDirection;
 	}
 	
 	return self;
@@ -95,15 +100,32 @@ static const int STATE_DYING = 3;
 	}
 }
 
-- (void)update {
+- (void)update:(ccTime)dt {
 	
+	switch (self.state) {
+			
+		case STATE_FLYING:
+			
+			self.sprite.position = ccp(self.velocityX * dt, self.velocityY * dt);
+			
+			break;
+			
+		case STATE_DYING:
+			
+			if (![self.explosion isActive]) {
+				
+				[self changeState:STATE_AVAILABLE_FOR_USE];
+			}
+			
+			break;
+	}
 }
 
 - (void)respondToCollisions {
 	
 	if (self.isHitOtherShip || self.isHitPlatform) {
 		
-		[self enterState:STATE_DYING];
+		[self changeState:STATE_DYING];
 	}
 }
 
@@ -117,7 +139,17 @@ static const int STATE_DYING = 3;
 }
 
 - (void)enterState:(int)state {
-	
+
+	switch (self.state) {
+			
+		case STATE_DYING:
+			
+			[self.explosion spawnAtPosition:self.sprite.position];
+			 
+			self.sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
+			
+			break;
+	}
 }
 
 - (void)exitState:(int)state {
@@ -142,7 +174,10 @@ static const int STATE_DYING = 3;
 	[self changeState:STATE_RESERVED];
 }
 
-- (void)spawn {
+- (void)spawn:(CGFloat)speed {
+	
+	self.velocityX = speed * _spawnDirection;
+	self.velocityY = 0.0f;
 	
 	[self changeState:STATE_FLYING];
 }

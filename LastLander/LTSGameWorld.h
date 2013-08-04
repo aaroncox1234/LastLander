@@ -13,6 +13,7 @@
 #import "LTSLevel.h"
 #import "LTSShip.h"
 #import "LTSSpawnWarningBlip.h"
+#import "LTSExplosion.h"
 
 @interface LTSGameWorld : NSObject
 
@@ -20,6 +21,8 @@
 @property (nonatomic, readonly, strong) NSArray *redShips;
 
 @property (nonatomic, readonly, strong) NSArray *redShipWarningBlips;
+
+@property (nonatomic, readonly, strong) NSArray *shipExplosions;
 
 @property (nonatomic, readonly, strong) LTSLevel *level;
 

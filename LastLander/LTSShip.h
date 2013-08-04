@@ -9,28 +9,37 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+#import "LTSExplosion.h"
+
 @interface LTSShip : NSObject
 
 @property (nonatomic) NSInteger state;
 
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 
+@property (nonatomic) CGPoint position;
+
 @property (nonatomic, readonly, strong)	NSArray *localPolygon;
 @property (nonatomic, readonly, strong) NSMutableArray *worldPolygon;
+
+@property (nonatomic) CGFloat velocityX;
+@property (nonatomic) CGFloat velocityY;
 
 @property (nonatomic) BOOL isHitOtherShip;
 @property (nonatomic) BOOL isHitPlatform;
 
+@property (nonatomic, strong) LTSExplosion *explosion;
+
 + (LTSShip *)createBlueShipWithBatchNode:(CCSpriteBatchNode *)batchNode;
 + (LTSShip *)createRedShipWithBatchNode:(CCSpriteBatchNode *)batchNode;
 
-- (void)update;
+- (void)update:(ccTime)dt;
 - (void)prepareCollisionData;
 - (void)respondToCollisions;
 
 - (BOOL)isAvailableForUse;
 - (BOOL)isReserved;
 - (void)reserveAtSpawnPosition:(CGPoint)spawnPosition;
-- (void)spawn;
+- (void)spawn:(GLfloat)speed;
 
 @end

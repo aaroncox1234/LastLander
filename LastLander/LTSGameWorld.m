@@ -41,32 +41,41 @@
 	if (self) {
 		
 		NSMutableArray *prepBlueShips = [NSMutableArray arrayWithCapacity:BLUE_SHIP_POOL_SIZE];
-
 		for (int i = 0; i < BLUE_SHIP_POOL_SIZE; i++) {
-
+			
 			[prepBlueShips addObject:[LTSShip createBlueShipWithBatchNode:batchNode]];
-		}		
-		
+		}
 		_blueShips = prepBlueShips;
 
 		NSMutableArray *prepRedShips = [NSMutableArray arrayWithCapacity:RED_SHIP_POOL_SIZE];
-		
 		for (int i = 0; i < RED_SHIP_POOL_SIZE; i++) {
 			
 			[prepRedShips addObject:[LTSShip createRedShipWithBatchNode:batchNode]];
 		}
-		
 		_redShips = prepRedShips;
 		
 		_ships = [_blueShips arrayByAddingObjectsFromArray:_redShips];
 		
-		NSMutableArray *prepRedShipSpawnWarningBlips = [NSMutableArray arrayWithCapacity:RED_SHIP_SPAWN_WARNING_BLIP_POOL_SIZE];
+		NSMutableArray *prepShipExplosions = [NSMutableArray arrayWithCapacity:SHIP_EXPLOSION_POOL_SIZE];
+		for (int i = 0; i < SHIP_EXPLOSION_POOL_SIZE; i++) {
+			
+			[prepShipExplosions addObject:[LTSExplosion createShipExplosionWithBatchNode:batchNode]];
+		}
+		_shipExplosions = prepShipExplosions;
 		
+		NSAssert( (_shipExplosions.count == _ships.count), @"The following loop expects a one-to-one matching for ships and ship explosions." );
+		for (int i = 0; i < _ships.count; i++) {
+			
+			LTSShip *ship = [_ships objectAtIndex:i];
+			LTSExplosion *explosion = [_shipExplosions objectAtIndex:i];
+			ship.explosion = explosion;
+		}
+		
+		NSMutableArray *prepRedShipSpawnWarningBlips = [NSMutableArray arrayWithCapacity:RED_SHIP_SPAWN_WARNING_BLIP_POOL_SIZE];
 		for (int i = 0; i < RED_SHIP_SPAWN_WARNING_BLIP_POOL_SIZE; i++) {
 			
 			[prepRedShipSpawnWarningBlips addObject:[LTSSpawnWarningBlip createRedShipSpawnWarningBlip:batchNode]];
 		}
-		
 		_redShipWarningBlips = prepRedShipSpawnWarningBlips;
 		
 		_level = [LTSLevel createLevel1WithBatchNode:batchNode];
@@ -118,8 +127,10 @@
 		
 		if (redShipWarningBlip.isCountdownFinished && !self.level.redShipSpawnZoneOccupied) {
 			
+			CGFloat redShipSpeed = [LTSRandom randomFloatFrom:_level.redShipSpawnIntervalMin to:_level.redShipSpawnIntervalMax];
+			
 			[redShipWarningBlip setAvailableForUse];
-			[redShipWarningBlip.correspondingRedShip spawn];
+			[redShipWarningBlip.correspondingRedShip spawn:redShipSpeed];
 			
 			// Only spawn once per frame.
 			break;
@@ -131,12 +142,17 @@
 	
 	for (LTSShip *ship in _ships) {
 		
-		[ship update];
+		[ship update:dt];
 	}
 	
 	for (LTSSpawnWarningBlip *redShipSpawnWarningBlip in _redShipWarningBlips) {
 		
 		[redShipSpawnWarningBlip update:dt];
+	}
+	
+	for (LTSExplosion *shipExplosion in _shipExplosions) {
+		
+		[shipExplosion update:dt];
 	}
 }
 

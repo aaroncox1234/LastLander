@@ -21,6 +21,9 @@
 @property (nonatomic, readonly) float redShipSpawnIntervalMin;
 @property (nonatomic, readonly) float redShipSpawnIntervalMax;
 
+@property (nonatomic, readonly) float redShipSpeedMin;
+@property (nonatomic, readonly) float redShipSpeedMax;
+
 + (LTSLevel *)createLevel1WithBatchNode:(CCSpriteBatchNode *)batchNode;
 
 @end

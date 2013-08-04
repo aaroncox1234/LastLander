@@ -40,7 +40,6 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 	sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
 	
 	CCAction *blinkingAction = [CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:blinkingAnimation]];
-	[sprite runAction:blinkingAction];
 	[batchNode addChild:sprite];
 	
 	return [[self alloc] initWithSprite:sprite blinkingAction:blinkingAction];
@@ -117,18 +116,20 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 		
 		case STATE_AVAILABLE_FOR_USE:
 			
+			[self.sprite stopAction:self.blinkingAction];
+			
 			self.sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
 			
 			break;
 			
 		case STATE_ACTIVE:
 			
+			[self.sprite runAction:self.blinkingAction];
+			
 			_timeRemaining = SPAWN_WARNING_BLIP_DURATION;
 			
 			break;
 	}
-	
-	
 }
 
 - (void)exitState:(int)state {
