@@ -12,6 +12,7 @@
 
 #import "LTSLevel.h"
 #import "LTSShip.h"
+#import "LTSShipController.h"
 #import "LTSSpawnWarningBlip.h"
 #import "LTSExplosion.h"
 
@@ -19,6 +20,8 @@
 
 @property (nonatomic, readonly, strong) NSArray *blueShips;
 @property (nonatomic, readonly, strong) NSArray *redShips;
+
+@property (nonatomic, readonly, strong) LTSShipController *playerController;
 
 @property (nonatomic, readonly, strong) NSArray *redShipWarningBlips;
 
@@ -29,5 +32,8 @@
 - (id)initWithBatchNode:(CCSpriteBatchNode *)batchNode;
 
 - (void)update:(ccTime)dt;
+
+- (void)onScreenTouchStart:(CGPoint)location;
+- (void)onScreenTouchEnd:(CGPoint)location;
 
 @end

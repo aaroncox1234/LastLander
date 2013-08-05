@@ -6,39 +6,30 @@
 //  Copyright Aaron Cox 2013. All rights reserved.
 //
 
-
-// Import the interfaces
 #import "IntroLayer.h"
-#import "GameplayLayer.h"
 
+#import "LTSGameLayer.h"
 
 #pragma mark - IntroLayer
 
-// HelloWorldLayer implementation
 @implementation IntroLayer
 
-// Helper class method that creates a Scene with the HelloWorldLayer as the only child.
-+(CCScene *) scene
++ (CCScene *)scene
 {
-	// 'scene' is an autorelease object.
-	CCScene *scene = [CCScene node];
-	
-	// 'layer' is an autorelease object.
 	IntroLayer *layer = [IntroLayer node];
 	
-	// add layer as a child to scene
+	CCScene *scene = [CCScene node];
 	[scene addChild: layer];
 	
-	// return the scene
 	return scene;
 }
 
-// 
--(id) init
-{
-	if( (self=[super init])) {
+- (id)init {
+	
+	self = [super init];
+	
+	if (self) {
 
-		// ask director for the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
 		CCSprite *background;
@@ -51,16 +42,15 @@
 		}
 		background.position = ccp(size.width/2, size.height/2);
 
-		// add the label as a child to this Layer
 		[self addChild: background];
 	}
 	
 	return self;
 }
 
--(void) onEnter
-{
+- (void)onEnter {
+	
 	[super onEnter];
-	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[GameplayLayer scene] ]];
+	[[CCDirector sharedDirector] replaceScene:[CCTransitionFade transitionWithDuration:1.0 scene:[LTSGameLayer scene] ]];
 }
 @end

@@ -106,7 +106,7 @@ static const int STATE_DYING = 3;
 			
 		case STATE_FLYING:
 			
-			self.sprite.position = ccp(self.velocityX * dt, self.velocityY * dt);
+			self.sprite.position = ccpMult(self.heading, self.speed * dt);
 			
 			break;
 			
@@ -174,12 +174,26 @@ static const int STATE_DYING = 3;
 	[self changeState:STATE_RESERVED];
 }
 
-- (void)spawn:(CGFloat)speed {
+- (void)spawnWithSpeed:(CGFloat)speed {
 	
-	self.velocityX = speed * _spawnDirection;
-	self.velocityY = 0.0f;
+	self.heading = ccp(_spawnDirection, 0.0f);
+	self.speed = speed;
 	
 	[self changeState:STATE_FLYING];
+}
+
+- (void)spawnWithSpeed:(GLfloat)speed atSpawnPosition:(CGPoint)spawnPosition {
+	
+	self.sprite.position = spawnPosition;
+	
+	[self spawnWithSpeed:speed];
+}
+
+- (void)rotate:(GLfloat)degrees {
+	
+	self.sprite.rotation += degrees;
+	
+	self.heading = [self.sprite convertToNodeSpaceAR:self.heading];
 }
 
 @end

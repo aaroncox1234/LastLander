@@ -11,6 +11,8 @@
 const float OFF_SCREEN_X = -9999.0f;
 const float OFF_SCREEN_Y = -9999.0f;
 
+const float SCREEN_SIDE_TOUCH_THRESHOLD_PERCENT = 0.2;
+
 const int BLUE_SHIP_POOL_SIZE = 1;
 const int RED_SHIP_POOL_SIZE = 10;
 const int RED_SHIP_SPAWN_WARNING_BLIP_POOL_SIZE = 4;
@@ -21,5 +23,10 @@ const float RED_SHIP_SPAWN_INTERVAL_MAX = 3.0f;
 
 const float RED_SHIP_SPEED_MIN = 4.0f;
 const float RED_SHIP_SPEED_MAX = 8.0f;
+
+const float PLAYER_SHIP_SPEED_MIN = 5.0;
+const float PLAYER_SHIP_SPEED_MAX = 10.0;
+const float PLAYER_SHIP_SPEED_BOOST_RATE = 1.0f;
+const float PLAYER_SHIP_TURN_RATE_DEGREES = 5.0f;
 
 const float SPAWN_WARNING_BLIP_DURATION = 5.0f;

@@ -1,20 +1,22 @@
 PHASE 1 - Ship Control
 
 blue ship
-	spawn on spawn point
 	start take off by pressing middle of screen
-	hold sides of screen to steer
 	land on platform at narrow angle
-	explode on crash
+	ships should detect landing state. store a "canLand" if red ships should never land
 
 game
 	fail when player crashes
+		create another sprite sheet for UI screens, display gentle fail screen when player ship crashes
+	clean up layers (GameOverLayer, etc)
 	create level 1
 		3 platforms
 		red ship zone
 		1 player spawns from side edge of screen
 
-
+Audio
+	(from touch):     //[[SimpleAudioEngine sharedEngine] playEffect:@"pew-pew-lei.caf"];
+	(from gamelay init, move to level) //[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf"];
 
 
 
@@ -25,11 +27,21 @@ PHASE LATER
 modes
 	finish all tasks to finish level
 	free mode (leaderboards)
+	endless runner, sometimes with multiple ships
 scoring
 	long boosts, near misses, collect dots, perform loops
+	display score during game
+	display score in fail screen
+main menu
+
+input
+	gradually slow down constantly; apply gravity inversely proportional to speed
+	allow ship to slide along top of platform
+	decelerate ship until full stop on top of platform (ideally, ship could slip off the end but recover)
 	
 optimization
 	broad phase collision detection
+	profile for performance and leaks
 	
 cleanup
 	pull position off of sprite. update the sprite position, but don't store position there. might be hopeless, given that sprite transforms our collision poly...

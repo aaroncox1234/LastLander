@@ -22,8 +22,8 @@
 @property (nonatomic, readonly, strong)	NSArray *localPolygon;
 @property (nonatomic, readonly, strong) NSMutableArray *worldPolygon;
 
-@property (nonatomic) CGFloat velocityX;
-@property (nonatomic) CGFloat velocityY;
+@property (nonatomic) CGPoint heading;	// using CGPoint as vector
+@property (nonatomic) CGFloat speed;
 
 @property (nonatomic) BOOL isHitOtherShip;
 @property (nonatomic) BOOL isHitPlatform;
@@ -40,6 +40,9 @@
 - (BOOL)isAvailableForUse;
 - (BOOL)isReserved;
 - (void)reserveAtSpawnPosition:(CGPoint)spawnPosition;
-- (void)spawn:(GLfloat)speed;
+- (void)spawnWithSpeed:(GLfloat)speed;
+- (void)spawnWithSpeed:(GLfloat)speed atSpawnPosition:(CGPoint)spawnPosition;
+
+- (void)rotate:(GLfloat)degrees;
 
 @end

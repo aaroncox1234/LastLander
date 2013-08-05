@@ -11,12 +11,14 @@
 
 @interface LTSLevel : NSObject
 
+@property (nonatomic, readonly, strong) CCSprite *background;
+
 @property (nonatomic, readonly, strong) NSArray *platforms;
 
 @property (nonatomic, readonly) CGRect redShipSpawnZone;
 @property (nonatomic) bool redShipSpawnZoneOccupied;
 
-@property (nonatomic, readonly) CGRect blueShipSpawnZone;
+@property (nonatomic, readonly) NSArray *playerShipSpawnPoints;
 
 @property (nonatomic, readonly) float redShipSpawnIntervalMin;
 @property (nonatomic, readonly) float redShipSpawnIntervalMax;

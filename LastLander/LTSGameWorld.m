@@ -26,9 +26,12 @@
 
 - (bool)testCollision:(NSArray *)polygon1 with:(NSArray *)polygon2;
 
+- (LTSShip *)findAvailableShipFrom:(NSArray *)shipArray;
+
 - (void)chooseNextRedShipSpawnTime;
-- (LTSShip *)findAvailableRedShip;
 - (LTSSpawnWarningBlip *)findAvailableRedShipSpawnWarningBlip;
+
+- (CGPoint)choosePlayerShipSpawnPoint;
 
 @end
 
@@ -81,6 +84,13 @@
 		_level = [LTSLevel createLevel1WithBatchNode:batchNode];
 		
 		[self chooseNextRedShipSpawnTime];
+		
+		// Start with a single spawned player ship. This might change in the future based on design decisions.
+		_playerController = [LTSShipController createShipController];
+		LTSShip *playerShip = [self findAvailableShipFrom:_blueShips];
+		CGPoint spawnPosition = [self choosePlayerShipSpawnPoint];
+		[playerShip spawnWithSpeed:0.0f atSpawnPosition:spawnPosition];
+		_playerController.ship = playerShip;
 	}
 	
 	return self;
@@ -95,6 +105,16 @@
 	[self respondToCollisions];
 }
 
+- (void)onScreenTouchStart:(CGPoint)location {
+	
+	[self.playerController onScreenTouchStart:location];
+}
+
+- (void)onScreenTouchEnd:(CGPoint)location {
+	
+	[self.playerController onScreenTouchEnd:location];
+}
+
 - (void)updateSpawning:(ccTime)dt {
 	
 	// When the spawn interval elapses, reserve a red ship and display a warning blip where it will spawn.
@@ -103,7 +123,7 @@
 	
 	if (_timeUntilNextRedShipSpawn <= 0.0f ) {
 		
-		LTSShip *availableRedShip = [self findAvailableRedShip];
+		LTSShip *availableRedShip = [self findAvailableShipFrom:self.redShips];
 		LTSSpawnWarningBlip *availableRedShipSpawnWarningBlip = [self findAvailableRedShipSpawnWarningBlip];
 		
 		// If every red ship or red ship spawn warning blip is in use, do nothing until another spawn interval elapses.
@@ -130,7 +150,7 @@
 			CGFloat redShipSpeed = [LTSRandom randomFloatFrom:_level.redShipSpawnIntervalMin to:_level.redShipSpawnIntervalMax];
 			
 			[redShipWarningBlip setAvailableForUse];
-			[redShipWarningBlip.correspondingRedShip spawn:redShipSpeed];
+			[redShipWarningBlip.correspondingRedShip spawnWithSpeed:redShipSpeed];
 			
 			// Only spawn once per frame.
 			break;
@@ -237,22 +257,22 @@
 	return NO;
 }
 
-- (void)chooseNextRedShipSpawnTime {
-	
-	_timeUntilNextRedShipSpawn = [LTSRandom randomFloatFrom:_level.redShipSpawnIntervalMin to:_level.redShipSpawnIntervalMax];
-}
+- (LTSShip *)findAvailableShipFrom:(NSArray *)shipArray {
 
-- (LTSShip *)findAvailableRedShip {
-	
-	for (LTSShip *redShip in self.redShips) {
+	for (LTSShip *ship in shipArray) {
 		
-		if ([redShip isAvailableForUse]) {
+		if ([ship isAvailableForUse]) {
 			
-			return redShip;
+			return ship;
 		}
 	}
 	
 	return NULL;
+}
+
+- (void)chooseNextRedShipSpawnTime {
+	
+	_timeUntilNextRedShipSpawn = [LTSRandom randomFloatFrom:_level.redShipSpawnIntervalMin to:_level.redShipSpawnIntervalMax];
 }
 
 - (LTSSpawnWarningBlip *)findAvailableRedShipSpawnWarningBlip {
@@ -266,6 +286,13 @@
 	}
 	
 	return NULL;
+}
+
+- (CGPoint)choosePlayerShipSpawnPoint {
+	
+	int index = [LTSRandom randomIntFrom:0 to:self.level.playerShipSpawnPoints.count];
+	
+	return [[self.level.playerShipSpawnPoints objectAtIndex:index] CGPointValue];
 }
 
 @end

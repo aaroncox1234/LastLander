@@ -10,7 +10,9 @@
 
 @interface LTSRandom : NSObject
 
-+ (float)randomFloatFrom:(float)min to:(float)max;
++ (int)randomIntFrom:(int)min to:(int)max;
+
++ (CGFloat)randomFloatFrom:(CGFloat)min to:(CGFloat)max;
 
 + (CGPoint)randomPointInRect:(CGRect)rect;
 

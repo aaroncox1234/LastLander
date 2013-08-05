@@ -12,6 +12,11 @@
 
 @implementation LTSRandom
 
++ (int)randomIntFrom:(int)min to:(int)max {
+	
+	return (int)[self randomFloatFrom:min to:max];
+}
+
 + (CGFloat)randomFloatFrom:(CGFloat)min to:(CGFloat)max {
 	
 	return min + (max - min) * (CGFloat)arc4random() / ARC4RANDOM_MAX;
