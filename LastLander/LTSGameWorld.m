@@ -10,6 +10,9 @@
 #import "LTSConstants.h"
 #import "LTSPlatform.h"
 #import "LTSRandom.h"
+#import "LTSDebugDrawLayer.h"
+
+#define DRAW_COLLISION_INFO 0
 
 @interface LTSGameWorld ()
 {
@@ -90,7 +93,8 @@
 		LTSShip *playerShip = [self findAvailableShipFrom:_blueShips];
 		CGPoint spawnPosition = [self choosePlayerShipSpawnPoint];
 		[playerShip spawnWithSpeed:0.0f atSpawnPosition:spawnPosition];
-		_playerController.ship = playerShip;
+		[playerShip setLanded];
+		[_playerController SetControlledShip:playerShip];
 	}
 	
 	return self;
@@ -127,13 +131,15 @@
 		LTSSpawnWarningBlip *availableRedShipSpawnWarningBlip = [self findAvailableRedShipSpawnWarningBlip];
 		
 		// If every red ship or red ship spawn warning blip is in use, do nothing until another spawn interval elapses.
-		if ( (availableRedShip != NULL) && (availableRedShipSpawnWarningBlip != NULL) ) {
+		if ( (availableRedShip != NULL) && (availableRedShipSpawnWarningBlip != NULL /*&& !self.level.redShipSpawnZoneOccupied*/) ) {
 		
 			CGPoint spawnPosition = [LTSRandom randomPointInRect:self.level.redShipSpawnZone];
+
+			CGSize winSize = [CCDirector sharedDirector].winSize;
+			
+			spawnPosition.x = winSize.width + (availableRedShip.sprite.contentSize.width *  2.0f);
 			
 			[availableRedShip reserveAtSpawnPosition:spawnPosition];
-			
-			CGSize winSize = [CCDirector sharedDirector].winSize;
 			
 			[availableRedShipSpawnWarningBlip spawnAtPosition:ccp(winSize.width, spawnPosition.y) forShip:availableRedShip];
 		}
@@ -145,9 +151,9 @@
 	
 	for (LTSSpawnWarningBlip *redShipWarningBlip in self.redShipWarningBlips ) {
 		
-		if (redShipWarningBlip.isCountdownFinished && !self.level.redShipSpawnZoneOccupied) {
+		if (redShipWarningBlip.isCountdownFinished) {
 			
-			CGFloat redShipSpeed = [LTSRandom randomFloatFrom:_level.redShipSpawnIntervalMin to:_level.redShipSpawnIntervalMax];
+			CGFloat redShipSpeed = [LTSRandom randomFloatFrom:_level.redShipSpeedMin to:_level.redShipSpeedMax];
 			
 			[redShipWarningBlip setAvailableForUse];
 			[redShipWarningBlip.correspondingRedShip spawnWithSpeed:redShipSpeed];
@@ -159,6 +165,8 @@
 }
 
 - (void)updateEntities:(ccTime)dt {
+	
+	[self.playerController update:dt];
 	
 	for (LTSShip *ship in _ships) {
 		
@@ -197,8 +205,21 @@
 	self.level.redShipSpawnZoneOccupied = NO;
 	
 	for (int shipIndex = 0; shipIndex < [_ships count]; shipIndex++) {
+
+		LTSShip *ship = [_ships objectAtIndex:shipIndex];
+		
+		ship.isHitOtherShip = NO;
+		ship.isHitPlatform = NO;
+		ship.isHitLandingZone = NO;
+	}
+	
+	for (int shipIndex = 0; shipIndex < [_ships count]; shipIndex++) {
 		
 		LTSShip *ship = [_ships objectAtIndex:shipIndex];
+		
+#if DRAW_COLLISION_INFO
+		[[LTSDebugDrawLayer getSharedInstance] drawPolygon:ship.worldPolygon];
+#endif
 		
 		for (int otherShipIndex = shipIndex + 1; otherShipIndex < [_ships count]; otherShipIndex++) {
 		
@@ -214,15 +235,28 @@
 		for (int platformIndex = 0; platformIndex < [self.level.platforms count]; platformIndex++) {
 			
 			LTSPlatform *platform = [self.level.platforms objectAtIndex:platformIndex];
+
+#if DRAW_COLLISION_INFO
+			[[LTSDebugDrawLayer getSharedInstance] drawPolygon:platform.worldPolygon];
+			[[LTSDebugDrawLayer getSharedInstance] drawRectangle:platform.landingZone];
+#endif
 			
 			if ([self testCollision:ship.worldPolygon with:platform.worldPolygon]) {
 				
 				ship.isHitPlatform = YES;
 			}
+			
+			if (CGRectIntersectsRect(ship.sprite.boundingBox, platform.landingZone)) {
+			
+				ship.isHitLandingZone = YES;
+			}
 		}
 		
-		if (CGRectIntersectsRect(ship.sprite.boundingBox, self.level.redShipSpawnZone))
-		{
+#if DRAW_COLLISION_INFO
+		[[LTSDebugDrawLayer getSharedInstance] drawRectangle:self.level.redShipSpawnZone];
+#endif
+		if (CGRectIntersectsRect(ship.sprite.boundingBox, self.level.redShipSpawnZone)) {
+
 			self.level.redShipSpawnZoneOccupied = YES;
 		}
 	}
@@ -240,7 +274,7 @@
 		CGPoint polygon1StartPoint = [[polygon1 objectAtIndex:polygon1StartIndex] CGPointValue];
 		CGPoint polygon1EndPoint = [[polygon1 objectAtIndex:polygon1EndIndex] CGPointValue];
 		
-		for (int polygon2StartIndex = 0; polygon2StartIndex < polygon2Count; polygon2StartIndex++) {
+		for (int polygon2StartIndex = 0; polygon2StartIndex < polygon2Count - 1; polygon2StartIndex++) {
 			
 			int polygon2EndIndex = polygon2StartIndex + 1;
 			
@@ -293,6 +327,11 @@
 	int index = [LTSRandom randomIntFrom:0 to:self.level.playerShipSpawnPoints.count];
 	
 	return [[self.level.playerShipSpawnPoints objectAtIndex:index] CGPointValue];
+}
+
+- (BOOL)isFailed {
+	
+	return ( (self.playerController != NULL) && (self.playerController.ship != NULL) && self.playerController.ship.isCrashed );
 }
 
 @end

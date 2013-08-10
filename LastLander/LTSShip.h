@@ -13,8 +13,6 @@
 
 @interface LTSShip : NSObject
 
-@property (nonatomic) NSInteger state;
-
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 
 @property (nonatomic) CGPoint position;
@@ -27,6 +25,9 @@
 
 @property (nonatomic) BOOL isHitOtherShip;
 @property (nonatomic) BOOL isHitPlatform;
+@property (nonatomic) BOOL isHitLandingZone;
+
+@property (nonatomic) BOOL canLand;
 
 @property (nonatomic, strong) LTSExplosion *explosion;
 
@@ -42,6 +43,12 @@
 - (void)reserveAtSpawnPosition:(CGPoint)spawnPosition;
 - (void)spawnWithSpeed:(GLfloat)speed;
 - (void)spawnWithSpeed:(GLfloat)speed atSpawnPosition:(CGPoint)spawnPosition;
+
+// TODO: remove these when the player input model changes
+- (void)setLanded;
+- (void)setFlying;
+- (BOOL)isLanded;
+- (BOOL)isCrashed;
 
 - (void)rotate:(GLfloat)degrees;
 

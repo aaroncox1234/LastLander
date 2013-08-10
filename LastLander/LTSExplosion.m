@@ -13,6 +13,9 @@ static const int STATE_AVAILABLE_FOR_USE = 0;
 static const int STATE_ACTIVE = 1;
 
 @interface LTSExplosion ()
+{
+	NSInteger _state;
+}
 
 - (id)initWithSprite:(CCSprite *)sprite explodingAction:(CCAction *)explodingAction;
 
@@ -29,7 +32,7 @@ static const int STATE_ACTIVE = 1;
 	NSMutableArray *explodingAnimationFrames = [NSMutableArray array];
 	for (int i = 0; i < 16; i++) {
 		
-		NSMutableString* frameName = [NSMutableString stringWithFormat:@"ship_explode%d", i];
+		NSMutableString* frameName = [NSMutableString stringWithFormat:@"ship_explode%d.png", i];
 		[explodingAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:frameName]];
 	}
 	
@@ -37,8 +40,9 @@ static const int STATE_ACTIVE = 1;
 	
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"ship_explode1.png"];
 	sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
+	sprite.zOrder = Z_ORDER_SHIP_EXPLOSION;
 	
-	CCAction *explodingAction = [CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:explodingAnimation]];
+	CCAction *explodingAction = [CCAnimate actionWithAnimation:explodingAnimation];
 	[batchNode addChild:sprite];
 	
 	return [[self alloc] initWithSprite:sprite explodingAction:explodingAction];
@@ -46,7 +50,7 @@ static const int STATE_ACTIVE = 1;
 
 - (void)update:(ccTime)dt {
 
-	switch (self.state) {
+	switch (_state) {
 			
 		case STATE_ACTIVE:
 			
@@ -61,12 +65,12 @@ static const int STATE_ACTIVE = 1;
 
 - (BOOL)isActive {
 	
-	return (self.state == STATE_ACTIVE);
+	return (_state == STATE_ACTIVE);
 }
 
 - (BOOL)isAvailableForUse {
 	
-	return (self.state == STATE_AVAILABLE_FOR_USE);
+	return (_state == STATE_AVAILABLE_FOR_USE);
 }
 
 - (void)spawnAtPosition:(CGPoint)position {
@@ -93,16 +97,16 @@ static const int STATE_ACTIVE = 1;
 
 - (void)changeState:(int)newState {
 	
-	[self exitState:self.state];
+	[self exitState:_state];
 	
-	self.state = newState;
+	_state = newState;
 	
 	[self enterState:newState];
 }
 
 - (void)enterState:(int)state {
 	
-	switch (self.state) {
+	switch (_state) {
 			
 		case STATE_AVAILABLE_FOR_USE:
 			

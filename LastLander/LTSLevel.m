@@ -23,18 +23,19 @@
 	CGSize winSize = [CCDirector sharedDirector].winSize;
 	CCSprite *background = [CCSprite spriteWithSpriteFrameName:@"LTS_bg_03.png"];
 	background.position = ccp(winSize.width/2, winSize.height/2);
+	background.zOrder = Z_ORDER_BACKGROUND;
 	[batchNode addChild:background];
 	
-	LTSPlatform *platform1 = [LTSPlatform createPlatform1WithBatchNode:batchNode position:ccp(100.0f, 170.0f)];
-	LTSPlatform *platform2 = [LTSPlatform createPlatform2WithBatchNode:batchNode position:ccp(320.0f, 240.0f)];
+	LTSPlatform *platform1 = [LTSPlatform createPlatform1WithBatchNode:batchNode position:ccp(150.0f, 40.0f)];
+	LTSPlatform *platform2 = [LTSPlatform createPlatform2WithBatchNode:batchNode position:ccp(320.0f, 20.0f)];
 	
 	NSArray *platforms = [NSArray arrayWithObjects:platform1, platform2, nil];
 	
-	CGRect redShipSpawnZone = CGRectMake(450.0f, 0.0f, 450.0f, 150.0f);
+	CGRect redShipSpawnZone = CGRectMake(500.0f, 155.0f, 40.0f, 150.0f);
 	
 	NSArray *playerShipSpawnPoints = [NSArray arrayWithObjects:
-									  [NSValue valueWithCGPoint:CGPointMake(100.0f, 170.0f)],
-									  [NSValue valueWithCGPoint:CGPointMake(320.0f, 240.0f)],
+									  [NSValue valueWithCGPoint:CGPointMake(150.0f, 122.0f)],
+									  [NSValue valueWithCGPoint:CGPointMake(320.0f, 67.0f)],
 									  nil];
 	
 	return [[self alloc] initWithBackground:background platforms:platforms redShipSpawnZone:redShipSpawnZone playerShipSpawnPoints:playerShipSpawnPoints];

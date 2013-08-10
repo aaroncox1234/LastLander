@@ -13,11 +13,11 @@
 
 @interface LTSShipController : NSObject
 
-@property (nonatomic, strong) LTSShip *ship;
+@property (nonatomic, readonly, strong) LTSShip *ship;
 
 + (LTSShipController *)createShipController;
 
-- (void)setShip:(LTSShip *)ship;
+- (void)SetControlledShip:(LTSShip *)ship;
 
 - (void)update:(ccTime)dt;
 

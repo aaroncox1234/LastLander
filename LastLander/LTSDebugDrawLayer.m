@@ -17,6 +17,7 @@
 @implementation LTSDebugDrawLayer
 {
 	NSMutableArray *_polygons;
+	NSMutableArray *_rectangles;
 }
 
 
@@ -42,6 +43,7 @@
 	if (self) {
 		
 		_polygons = [NSMutableArray array];
+		_rectangles = [NSMutableArray array];
 	}
 	
 	return self;
@@ -52,7 +54,14 @@
 	[_polygons addObject:polygon];
 }
 
+- (void)drawRectangle:(CGRect)rectangle {
+	
+	[_rectangles addObject:[NSValue valueWithCGRect:rectangle]];
+}
+
 - (void)draw {
+	
+	// Polygons
 	
 	ccDrawColor4F(1.0f, 1.0f, 1.0f, 1.0f);
 	
@@ -71,6 +80,35 @@
 	}
 	
 	[_polygons removeAllObjects];
+	
+	// Rectangles
+	
+	ccDrawColor4F(1.0f, 0.0f, 0.0f, 1.0f);
+	
+	for (int i = 0; i < [_rectangles count]; i++) {
+		
+		CGRect rectangle = [[_rectangles objectAtIndex:i] CGRectValue];
+		
+		CGPoint destination = ccp(rectangle.origin.x + rectangle.size.width, rectangle.origin.y + rectangle.size.height);
+
+		ccDrawRect( rectangle.origin, destination );
+	}
+	
+	for (NSArray *polygon in _polygons) {
+		
+		for (int startIdx = 0; startIdx < [polygon count]; startIdx++) {
+			
+			int endIdx = startIdx + 1;
+			if (endIdx >= [polygon count]) {
+				
+				endIdx = 0;
+			}
+			
+			ccDrawLine([[polygon objectAtIndex:startIdx] CGPointValue], [[polygon objectAtIndex:endIdx] CGPointValue]);
+		}
+	}
+	
+	[_rectangles removeAllObjects];
 }
 
 @end

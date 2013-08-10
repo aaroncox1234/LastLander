@@ -36,4 +36,6 @@
 - (void)onScreenTouchStart:(CGPoint)location;
 - (void)onScreenTouchEnd:(CGPoint)location;
 
+- (BOOL)isFailed;
+
 @end

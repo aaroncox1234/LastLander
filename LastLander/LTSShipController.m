@@ -33,39 +33,63 @@ static const int INPUT_BOOST = (1<<2);
 	return [[LTSShipController alloc] init];
 }
 
-- (void)setShip:(LTSShip *)ship {
+- (void)SetControlledShip:(LTSShip *)ship {
 	
 	if (self.ship != NULL) {
 		
 		self.ship.speed = PLAYER_SHIP_SPEED_MIN;
 	}
 	
-	self.ship = ship;
+	_ship = ship;
 }
 
 - (void)update:(ccTime)dt {
 	
-	if ( self.ship == NULL) {
+	if (self.ship == NULL) {
 		
 		return;
 	}
 	
-	if (_inputState == INPUT_BOOST)
-	{
-		self.ship.speed = MIN(self.ship.speed + PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MAX);
-	}
-	else
-	{
-		self.ship.speed = MAX(self.ship.speed - PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MIN);
-	}
-	
-	if (_inputState == INPUT_STEER_CW) {
+	if (self.ship.isLanded) {
+		
+		if (_inputState == INPUT_BOOST) {
 			
-		[self.ship rotate:PLAYER_SHIP_TURN_RATE_DEGREES];
-	}
-	else if (_inputState == INPUT_STEER_CCW) {
+			// The ship has to leave the current landing zone before it can land again.
+			self.ship.canLand = NO;
 			
-		[self.ship rotate:-PLAYER_SHIP_TURN_RATE_DEGREES];
+			[self.ship setSpeed:PLAYER_SHIP_SPEED_MIN];
+			[self.ship setFlying];
+		}
+	}
+	else {
+		
+		if (_inputState == INPUT_BOOST)	{
+			
+			self.ship.speed = MIN(self.ship.speed + PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MAX);
+		}
+		else {
+			
+			self.ship.speed = MAX(self.ship.speed - PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MIN);
+		}
+		
+		if (_inputState == INPUT_STEER_CW) {
+				
+			[self.ship rotate:PLAYER_SHIP_TURN_RATE_DEGREES];
+		}
+		else if (_inputState == INPUT_STEER_CCW) {
+				
+			[self.ship rotate:-PLAYER_SHIP_TURN_RATE_DEGREES];
+		}
+		
+		// Assumption: The ship can't land because it's still in its initial landing zone.
+		// TODO: Remove this logic in the second pass of player control.
+		if (!self.ship.canLand) {
+			
+			if (!self.ship.isHitLandingZone) {
+				
+				self.ship.canLand = TRUE;
+			}
+		}
 	}
 }
 

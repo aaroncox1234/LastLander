@@ -21,6 +21,7 @@
 	
 	CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"LTS_plat_01.png"];
 	sprite.position = position;
+	sprite.zOrder = Z_ORDER_PLATFORM;
 	[batchNode addChild:sprite];
 	
 	NSArray *polygon = [NSArray arrayWithObjects:
@@ -66,7 +67,7 @@
 						[NSValue valueWithCGPoint:CGPointMake(48.0f, 72.5f)],
 						nil];
 	
-	CGRect landingZone = CGRectMake(-50.0f, 85.0f, 100.0f, 10.0f);
+	CGRect landingZone = CGRectMake(-50.0f, 72.0f, 100.0f, 10.0f);
 	
 	return [[self alloc] initWithSprite:sprite localPolygon:polygon landingZone:landingZone];
 }
@@ -75,6 +76,7 @@
 	
 	CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"LTS_plat_02.png"];
 	sprite.position = position;
+	sprite.zOrder = Z_ORDER_PLATFORM;
 	[batchNode addChild:sprite];
 	
 	NSArray *polygon = [NSArray arrayWithObjects:
@@ -104,7 +106,7 @@
 						[NSValue valueWithCGPoint:CGPointMake(30.8f, 38.2f)],
 						nil];
 	
-	CGRect landingZone = CGRectMake(-32.0f, 50.0f, 64.0f, 10.0f);
+	CGRect landingZone = CGRectMake(-32.0f, 37.0f, 64.0f, 10.0f);
 	
 	return [[self alloc] initWithSprite:sprite localPolygon:polygon landingZone:landingZone];
 }
@@ -113,6 +115,7 @@
 	
 	CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"LTS_plat_03.png"];
 	sprite.position = position;
+	sprite.zOrder = Z_ORDER_PLATFORM;
 	[batchNode addChild:sprite];
 	
 	NSArray *polygon = [NSArray arrayWithObjects:
@@ -156,7 +159,7 @@
 						[NSValue valueWithCGPoint:CGPointMake(34.9f, 60.4f)],
 						nil];
     
-	CGRect landingZone = CGRectMake(-37.0f, 72.0f, 75.0f, 10.0f);
+	CGRect landingZone = CGRectMake(-37.0f, 60.0f, 75.0f, 10.0f);
 	
 	return [[self alloc] initWithSprite:sprite localPolygon:polygon landingZone:landingZone];
 }
@@ -175,14 +178,14 @@
 			
 			CGPoint localPoint = [[localPolygon objectAtIndex:i] CGPointValue];
 			
-			CGPoint worldPoint = [_sprite convertToNodeSpaceAR:localPoint];
+			CGPoint worldPoint = [_sprite convertToWorldSpaceAR:localPoint];
 			
-			[worldPolygon replaceObjectAtIndex:i withObject:[NSValue valueWithCGPoint:worldPoint]];
+			[worldPolygon addObject:[NSValue valueWithCGPoint:worldPoint]];
 		}
 		
 		_worldPolygon = worldPolygon;
 		
-		_landingZone.origin = [_sprite convertToNodeSpaceAR:localLandingZone.origin];
+		_landingZone.origin = [_sprite convertToWorldSpaceAR:localLandingZone.origin];
 		_landingZone.size = localLandingZone.size;
 	}
 	

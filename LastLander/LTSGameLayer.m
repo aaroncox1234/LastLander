@@ -12,6 +12,7 @@
 #import "SimpleAudioEngine.h"
 
 #import "LTSDebugDrawLayer.h"
+#import "LTSGameOverLayer.h"
 #import "LTSConstants.h"
 
 @interface LTSGameLayer ()
@@ -40,7 +41,7 @@
 	
     if (self) {
 		
-		_spriteSheet1 = [CCSpriteBatchNode batchNodeWithFile:@"LTSGameplaySpriteSheet1.png" capacity:2];
+		_spriteSheet1 = [CCSpriteBatchNode batchNodeWithFile:@"LTSGameplaySpriteSheet1.png" capacity:24];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"LTSGameplaySpriteSheet1.plist"];
 		[self addChild:_spriteSheet1];
 
@@ -57,6 +58,17 @@
 - (void)update:(ccTime)dt {
 	
 	[self.gameWorld update:dt];
+	
+	if (self.gameWorld.isFailed) {
+		
+		[self runAction:
+         [CCSequence actions:
+          [CCDelayTime actionWithDuration:2],
+          [CCCallBlockN actionWithBlock:^(CCNode *node) {
+             [[CCDirector sharedDirector] replaceScene:[LTSGameOverLayer scene]];
+         }],
+          nil]];
+	}
 }
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -65,6 +77,8 @@
     CGPoint location = [self convertTouchToNodeSpace:touch];
     
 	[self.gameWorld onScreenTouchStart:location];
+	
+	CCLOG(@"Touch detected at (%f, %f)", location.x, location.y);
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

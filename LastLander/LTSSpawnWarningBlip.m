@@ -15,6 +15,7 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 
 @interface LTSSpawnWarningBlip ()
 {
+	NSInteger _state;
 	CGFloat _timeRemaining;
 }
 
@@ -31,13 +32,14 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 + (LTSShip *)createRedShipSpawnWarningBlip:(CCSpriteBatchNode *)batchNode {
 	
 	NSMutableArray *blinkingAnimationFrames = [NSMutableArray array];
-	[blinkingAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"spawn_R_frame1"]];
-    [blinkingAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"spawn_R_frame2"]];
+	[blinkingAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"spawn_R_frame1.png"]];
+    [blinkingAnimationFrames addObject:[[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"spawn_R_frame2.png"]];
 	
 	CCAnimation *blinkingAnimation = [CCAnimation animationWithSpriteFrames:blinkingAnimationFrames delay:0.1f];
 	
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"spawn_R_frame1.png"];
 	sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
+	sprite.zOrder = Z_ORDER_RED_SHIP_SPAWN_WARNING_BLIP;
 	
 	CCAction *blinkingAction = [CCRepeatForever actionWithAction:[CCAnimate actionWithAnimation:blinkingAnimation]];
 	[batchNode addChild:sprite];
@@ -47,7 +49,7 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 
 - (void)update:(ccTime)dt
 {
-	switch (self.state) {
+	switch (_state) {
 			
 		case STATE_ACTIVE:
 			
@@ -81,12 +83,12 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 
 - (BOOL)isAvailableForUse {
 	
-	return (self.state == STATE_AVAILABLE_FOR_USE);
+	return (_state == STATE_AVAILABLE_FOR_USE);
 }
 
 - (BOOL)isCountdownFinished {
 	
-	return (self.state == STATE_FINISHED_COUNTDOWN);
+	return (_state == STATE_FINISHED_COUNTDOWN);
 }
 
 - (void)spawnAtPosition:(CGPoint)position forShip:(LTSShip *)ship {
@@ -103,9 +105,9 @@ static const int STATE_FINISHED_COUNTDOWN = 2;
 
 - (void)changeState:(int)newState {
 	
-	[self exitState:self.state];
+	[self exitState:_state];
 	
-	self.state = newState;
+	_state = newState;
 	
 	[self enterState:newState];
 }

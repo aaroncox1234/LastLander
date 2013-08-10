@@ -11,8 +11,6 @@
 
 @interface LTSExplosion : NSObject
 
-@property (nonatomic) NSInteger state;
-
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 @property (nonatomic, readonly, strong) CCAction *explodingAction;
 

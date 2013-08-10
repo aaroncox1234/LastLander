@@ -14,9 +14,11 @@ static const int STATE_AVAILABLE_FOR_USE = 0;
 static const int STATE_RESERVED = 1;
 static const int STATE_FLYING = 2;
 static const int STATE_DYING = 3;
+static const int STATE_LANDED = 4;
 
 @interface LTSShip ()
 {
+	NSInteger _state;
 	CGFloat _spawnDirection;
 }
 
@@ -34,6 +36,7 @@ static const int STATE_DYING = 3;
 	
 	CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"ship_B_01.png"];
 	sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
+	sprite.zOrder = Z_ORDER_BLUE_SHIP;
 	[batchNode addChild:sprite];
 	
 	NSArray *polygon = [NSArray arrayWithObjects:
@@ -52,6 +55,7 @@ static const int STATE_DYING = 3;
 	
 	CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"ship_R_01.png"];
 	sprite.position = ccp(OFF_SCREEN_X, OFF_SCREEN_Y);
+	sprite.zOrder = Z_ORDER_RED_SHIP;
 	[batchNode addChild:sprite];
 	
 	NSArray *polygon = [NSArray arrayWithObjects:
@@ -77,10 +81,13 @@ static const int STATE_DYING = 3;
 		_sprite = sprite;
 		
 		_localPolygon = polygon;
-		_worldPolygon = [polygon copy];
+		_worldPolygon = [NSMutableArray arrayWithArray:polygon];
 		
 		_isHitOtherShip = NO;
 		_isHitPlatform = NO;
+		_isHitLandingZone = NO;
+		
+		_canLand = NO;
 		
 		_spawnDirection = spawnDirection;
 	}
@@ -94,7 +101,7 @@ static const int STATE_DYING = 3;
 		
 		CGPoint localPoint = [[self.localPolygon objectAtIndex:i] CGPointValue];
 		
-		CGPoint worldPoint = [self.sprite convertToNodeSpaceAR:localPoint];
+		CGPoint worldPoint = [self.sprite convertToWorldSpaceAR:localPoint];
 		
 		[self.worldPolygon replaceObjectAtIndex:i withObject:[NSValue valueWithCGPoint:worldPoint]];
 	}
@@ -102,11 +109,11 @@ static const int STATE_DYING = 3;
 
 - (void)update:(ccTime)dt {
 	
-	switch (self.state) {
+	switch (_state) {
 			
 		case STATE_FLYING:
 			
-			self.sprite.position = ccpMult(self.heading, self.speed * dt);
+			self.sprite.position = ccpAdd( self.sprite.position, ccpMult(self.heading, self.speed * dt) );
 			
 			break;
 			
@@ -123,24 +130,41 @@ static const int STATE_DYING = 3;
 
 - (void)respondToCollisions {
 	
-	if (self.isHitOtherShip || self.isHitPlatform) {
-		
-		[self changeState:STATE_DYING];
+	switch (_state) {
+			
+		case STATE_FLYING:
+		{
+			float rotation = -CC_RADIANS_TO_DEGREES( ccpToAngle(self.heading) );
+
+			if (self.canLand && self.isHitLandingZone && self.isHitPlatform && (rotation >= LANDING_ANGLE_MIN) && (rotation <= LANDING_ANGLE_MAX)) {
+
+				self.speed = 0.0f;
+				self.heading = ccp(1.0f, 0.0f);
+				self.sprite.rotation = 0.0f;
+				self.sprite.position = ccp(self.sprite.position.x, self.sprite.position.y - 2.0f); // HACK
+					
+				[self changeState:STATE_LANDED];
+			}
+			else if (self.isHitOtherShip || self.isHitPlatform) {
+				
+				[self changeState:STATE_DYING];
+			}
+		}break;
 	}
 }
 
 - (void)changeState:(int)newState {
 	
-	[self exitState:self.state];
+	[self exitState:_state];
 	
-	self.state = newState;
+	_state = newState;
 	
 	[self enterState:newState];
 }
 
 - (void)enterState:(int)state {
 
-	switch (self.state) {
+	switch (_state) {
 			
 		case STATE_DYING:
 			
@@ -159,12 +183,12 @@ static const int STATE_DYING = 3;
 
 - (BOOL)isAvailableForUse {
 	
-	return (self.state == STATE_AVAILABLE_FOR_USE);
+	return (_state == STATE_AVAILABLE_FOR_USE);
 }
 
 - (BOOL)isReserved {
 	
-	return (self.state == STATE_RESERVED);
+	return (_state == STATE_RESERVED);
 }
 
 - (void)reserveAtSpawnPosition:(CGPoint)spawnPosition {
@@ -189,11 +213,31 @@ static const int STATE_DYING = 3;
 	[self spawnWithSpeed:speed];
 }
 
+- (void)setLanded {
+	
+	[self changeState:STATE_LANDED];
+}
+
+- (void)setFlying {
+	
+	[self changeState:STATE_FLYING];
+}
+
+- (BOOL)isLanded {
+	
+	return (_state == STATE_LANDED);
+}
+
+- (BOOL)isCrashed {
+	
+	return (_state == STATE_DYING);
+}
+
 - (void)rotate:(GLfloat)degrees {
 	
 	self.sprite.rotation += degrees;
 	
-	self.heading = [self.sprite convertToNodeSpaceAR:self.heading];
+	self.heading = ccpForAngle( -CC_DEGREES_TO_RADIANS(self.sprite.rotation) );
 }
 
 @end

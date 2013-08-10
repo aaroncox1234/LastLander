@@ -17,5 +17,6 @@
 + (LTSDebugDrawLayer *)getSharedInstance;
 
 - (void)drawPolygon:(NSArray *)polygon;
+- (void)drawRectangle:(CGRect)rectangle;
 
 @end

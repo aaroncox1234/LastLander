@@ -32,7 +32,7 @@
         CGSize winSize = [[CCDirector sharedDirector] winSize];
 		
         CCLabelTTF *label = [CCLabelTTF labelWithString:message fontName:@"Arial" fontSize:32];
-        label.color = ccc3(0,0,0);
+        label.color = ccc3(255,255,255);
         label.position = ccp(winSize.width/2, winSize.height/2);
         [self addChild:label];
         

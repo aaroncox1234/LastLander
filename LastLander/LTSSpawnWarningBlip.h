@@ -13,8 +13,6 @@
 
 @interface LTSSpawnWarningBlip : NSObject
 
-@property (nonatomic) NSInteger state;
-
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 @property (nonatomic, readonly, strong) CCAction *blinkingAction;
 @property (nonatomic, strong) LTSShip *correspondingRedShip;
