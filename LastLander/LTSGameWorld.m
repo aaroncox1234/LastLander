@@ -27,8 +27,6 @@
 - (void)testCollisions;
 - (void)respondToCollisions;
 
-- (bool)testCollision:(NSArray *)polygon1 with:(NSArray *)polygon2;
-
 - (LTSShip *)findAvailableShipFrom:(NSArray *)shipArray;
 
 - (void)chooseNextRedShipSpawnTime;
@@ -218,14 +216,14 @@
 		LTSShip *ship = [_ships objectAtIndex:shipIndex];
 		
 #if DRAW_COLLISION_INFO
-		[[LTSDebugDrawLayer getSharedInstance] drawPolygon:ship.worldPolygon];
+		[[LTSDebugDrawLayer getSharedInstance] drawPolygon:ship.collisionPolygon.worldPolygonAsArray];
 #endif
 		
 		for (int otherShipIndex = shipIndex + 1; otherShipIndex < [_ships count]; otherShipIndex++) {
 		
 			LTSShip *otherShip = [_ships objectAtIndex:otherShipIndex];
 			
-			if ([self testCollision:ship.worldPolygon with:otherShip.worldPolygon]) {
+			if ([ship.collisionPolygon isIntersecting:otherShip.collisionPolygon]) {
 				
 				ship.isHitOtherShip = YES;
 				otherShip.isHitOtherShip = YES;
@@ -237,11 +235,11 @@
 			LTSPlatform *platform = [self.level.platforms objectAtIndex:platformIndex];
 
 #if DRAW_COLLISION_INFO
-			[[LTSDebugDrawLayer getSharedInstance] drawPolygon:platform.worldPolygon];
+			[[LTSDebugDrawLayer getSharedInstance] drawPolygon:platform.collisionPolygon.worldPolygonAsArray];
 			[[LTSDebugDrawLayer getSharedInstance] drawRectangle:platform.landingZone];
 #endif
 			
-			if ([self testCollision:ship.worldPolygon with:platform.worldPolygon]) {
+			if ([ship.collisionPolygon isIntersecting:platform.collisionPolygon]) {
 				
 				ship.isHitPlatform = YES;
 			}
@@ -260,35 +258,6 @@
 			self.level.redShipSpawnZoneOccupied = YES;
 		}
 	}
-}
-
-- (bool)testCollision:(NSArray *)polygon1 with:(NSArray *)polygon2 {
-	
-	int polygon1Count = [polygon1 count];
-	int polygon2Count = [polygon2 count];
-	
-	for (int polygon1StartIndex = 0; polygon1StartIndex < polygon1Count - 1; polygon1StartIndex++) {
-		
-		int polygon1EndIndex = polygon1StartIndex + 1;
-		
-		CGPoint polygon1StartPoint = [[polygon1 objectAtIndex:polygon1StartIndex] CGPointValue];
-		CGPoint polygon1EndPoint = [[polygon1 objectAtIndex:polygon1EndIndex] CGPointValue];
-		
-		for (int polygon2StartIndex = 0; polygon2StartIndex < polygon2Count - 1; polygon2StartIndex++) {
-			
-			int polygon2EndIndex = polygon2StartIndex + 1;
-			
-			CGPoint polygon2StartPoint = [[polygon2 objectAtIndex:polygon2StartIndex] CGPointValue];
-			CGPoint polygon2EndPoint = [[polygon2 objectAtIndex:polygon2EndIndex] CGPointValue];
-			
-			if (ccpSegmentIntersect(polygon1StartPoint, polygon1EndPoint, polygon2StartPoint, polygon2EndPoint)) {
-				
-				return YES;
-			}
-		}
-	}
-	
-	return NO;
 }
 
 - (LTSShip *)findAvailableShipFrom:(NSArray *)shipArray {

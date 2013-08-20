@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
+#import "LTSCollisionPolygon.h"
+
 @interface LTSPlatform : NSObject
 
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 
-@property (nonatomic, readonly, strong) NSArray *worldPolygon;
+@property (nonatomic, readonly, strong)	LTSCollisionPolygon *collisionPolygon;
 
 @property (nonatomic, readonly) CGRect landingZone;
 

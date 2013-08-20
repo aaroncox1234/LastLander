@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AC3B05B91777D61B009FE384 /* LTSPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3B05B81777D61B009FE384 /* LTSPlatform.m */; };
 		AC3B05EF17853F72009FE384 /* LTSRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3B05EE17853F72009FE384 /* LTSRandom.m */; };
+		AC42586917B611AC00BA7F20 /* LTSCollisionPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */; };
 		AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */; };
 		AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */; };
 		AC5BCBF8175F067500FC3BF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */; };
@@ -167,6 +168,8 @@
 		AC3B05B81777D61B009FE384 /* LTSPlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSPlatform.m; sourceTree = "<group>"; };
 		AC3B05ED17853F72009FE384 /* LTSRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSRandom.h; sourceTree = "<group>"; };
 		AC3B05EE17853F72009FE384 /* LTSRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSRandom.m; sourceTree = "<group>"; };
+		AC42586717B611AB00BA7F20 /* LTSCollisionPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCollisionPolygon.h; sourceTree = "<group>"; };
+		AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCollisionPolygon.m; sourceTree = "<group>"; };
 		AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LTSGameplaySpriteSheet1.plist; sourceTree = "<group>"; };
 		AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LTSGameplaySpriteSheet1.png; sourceTree = "<group>"; };
 		AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -519,6 +522,8 @@
 				AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */,
 				AC9DBC0E17AF129E00100BCF /* LTSShipController.h */,
 				AC9DBC0F17AF129F00100BCF /* LTSShipController.m */,
+				AC42586717B611AB00BA7F20 /* LTSCollisionPolygon.h */,
+				AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */,
 			);
 			name = "LTS Gameplay";
 			sourceTree = "<group>";
@@ -1200,6 +1205,7 @@
 				AC9DBC0617AEEEC900100BCF /* LTSExplosion.m in Sources */,
 				AC9DBC0917AF034B00100BCF /* LTSGameLayer.m in Sources */,
 				AC9DBC1017AF129F00100BCF /* LTSShipController.m in Sources */,
+				AC42586917B611AC00BA7F20 /* LTSCollisionPolygon.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

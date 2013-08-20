@@ -27,6 +27,7 @@ extern const float PLAYER_SHIP_SPEED_MAX;
 extern const float PLAYER_SHIP_SPEED_BOOST_RATE;
 extern const float PLAYER_SHIP_TURN_RATE_DEGREES;
 
+extern const float LANDING_SPEED_MAX;
 extern const float LANDING_ANGLE_MIN;
 extern const float LANDING_ANGLE_MAX;
 
@@ -38,3 +39,5 @@ extern const int Z_ORDER_BLUE_SHIP;
 extern const int Z_ORDER_RED_SHIP;
 extern const int Z_ORDER_SHIP_EXPLOSION;
 extern const int Z_ORDER_RED_SHIP_SPAWN_WARNING_BLIP;
+
+extern const float WORLD_BOUNDS_SCREEN_BUFFER;

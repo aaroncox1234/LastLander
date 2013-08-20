@@ -10,15 +10,13 @@
 #import "cocos2d.h"
 
 #import "LTSExplosion.h"
+#import "LTSCollisionPolygon.h"
 
 @interface LTSShip : NSObject
 
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 
-@property (nonatomic) CGPoint position;
-
-@property (nonatomic, readonly, strong)	NSArray *localPolygon;
-@property (nonatomic, readonly, strong) NSMutableArray *worldPolygon;
+@property (nonatomic, readonly, strong)	LTSCollisionPolygon *collisionPolygon;
 
 @property (nonatomic) CGPoint heading;	// using CGPoint as vector
 @property (nonatomic) CGFloat speed;

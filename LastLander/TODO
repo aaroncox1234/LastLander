@@ -1,8 +1,9 @@
 PHASE 1 - Ship Control
 
-PROBLEM: blue ship isn't crashing anymore!
-		 do red ships ever crash?
-		make sure when landing on a new platform that that platform becomes the landed platform
+PROBLEMS
+	* Red ships eventually stop spawning
+	* Player ship sometimes gets stuck inside platform
+	* Framerate is inconsistent
 
 
 Audio

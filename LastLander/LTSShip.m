@@ -16,13 +16,20 @@ static const int STATE_FLYING = 2;
 static const int STATE_DYING = 3;
 static const int STATE_LANDED = 4;
 
+static const int MAX_SHIP_POLYGON_SIZE = 6;
+
 @interface LTSShip ()
 {
 	NSInteger _state;
 	CGFloat _spawnDirection;
+	CGRect _worldBounds;
+	
+	//poly
+	CGPoint _localPolygonArray[MAX_SHIP_POLYGON_SIZE];
+	int _polygonSize;
 }
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon spawnDirection:(CGFloat)spawnDirection;
+- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon spawnDirection:(CGFloat)spawnDirection;
 
 - (void)changeState:(int)newState;
 - (void)enterState:(int)state;
@@ -39,14 +46,13 @@ static const int STATE_LANDED = 4;
 	sprite.zOrder = Z_ORDER_BLUE_SHIP;
 	[batchNode addChild:sprite];
 	
-	NSArray *polygon = [NSArray arrayWithObjects:
-						[NSValue valueWithCGPoint:CGPointMake(14.1f, 6.7f)],
-						[NSValue valueWithCGPoint:CGPointMake(-14.2f, 6.6f)],
-						[NSValue valueWithCGPoint:CGPointMake(-14.3f, -1.6f)],
-						[NSValue valueWithCGPoint:CGPointMake(-7.6f, -6.8f)],
-						[NSValue valueWithCGPoint:CGPointMake(14.4f, -6.8f)],
-						[NSValue valueWithCGPoint:CGPointMake(14.1f, 6.7f)],
-						nil];
+	LTSCollisionPolygon *polygon = [[LTSCollisionPolygon alloc] init];
+	[polygon addPoint:CGPointMake(14.1f, 6.7f)];
+	[polygon addPoint:CGPointMake(-14.2f, 6.6f)];
+	[polygon addPoint:CGPointMake(-14.3f, -1.6f)];
+	[polygon addPoint:CGPointMake(-7.6f, -6.8f)];
+	[polygon addPoint:CGPointMake(14.4f, -6.8f)];
+	[polygon addPoint:CGPointMake(14.1f, 6.7f)];
 	
 	return [[self alloc] initWithSprite:sprite polygon:polygon spawnDirection:1.0f];
 }
@@ -58,19 +64,18 @@ static const int STATE_LANDED = 4;
 	sprite.zOrder = Z_ORDER_RED_SHIP;
 	[batchNode addChild:sprite];
 	
-	NSArray *polygon = [NSArray arrayWithObjects:
-						[NSValue valueWithCGPoint:CGPointMake(7.1f, -6.7f)],
-						[NSValue valueWithCGPoint:CGPointMake(14.3f, -1.5f)],
-						[NSValue valueWithCGPoint:CGPointMake(14.0f, 6.8f)],
-						[NSValue valueWithCGPoint:CGPointMake(-14.5f, 6.7f)],
-						[NSValue valueWithCGPoint:CGPointMake(-14.4f, -6.6f)],
-						[NSValue valueWithCGPoint:CGPointMake(7.1f, -6.7f)],
-						nil];
+	LTSCollisionPolygon *polygon = [[LTSCollisionPolygon alloc] init];
+	[polygon addPoint:CGPointMake(7.1f, -6.7f)];
+	[polygon addPoint:CGPointMake(14.3f, -1.5f)];
+	[polygon addPoint:CGPointMake(14.0f, 6.8f)];
+	[polygon addPoint:CGPointMake(-14.5f, 6.7f)];
+	[polygon addPoint:CGPointMake(-14.4f, -6.6f)];
+	[polygon addPoint:CGPointMake(7.1f, -6.7f)];
 	
 	return [[self alloc] initWithSprite:sprite polygon:polygon spawnDirection:-1.0f];
 }
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(NSArray *)polygon spawnDirection:(CGFloat)spawnDirection {
+- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon spawnDirection:(CGFloat)spawnDirection {
 	
 	self = [super init];
 	
@@ -80,8 +85,7 @@ static const int STATE_LANDED = 4;
 		
 		_sprite = sprite;
 		
-		_localPolygon = polygon;
-		_worldPolygon = [NSMutableArray arrayWithArray:polygon];
+		_collisionPolygon = polygon;
 		
 		_isHitOtherShip = NO;
 		_isHitPlatform = NO;
@@ -90,6 +94,10 @@ static const int STATE_LANDED = 4;
 		_canLand = NO;
 		
 		_spawnDirection = spawnDirection;
+		
+		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		
+		_worldBounds = CGRectMake( -WORLD_BOUNDS_SCREEN_BUFFER, -WORLD_BOUNDS_SCREEN_BUFFER, winSize.width + 2*WORLD_BOUNDS_SCREEN_BUFFER, winSize.height + 2*WORLD_BOUNDS_SCREEN_BUFFER);
 	}
 	
 	return self;
@@ -97,14 +105,7 @@ static const int STATE_LANDED = 4;
 
 - (void)prepareCollisionData {
 	
-	for (int i = 0; i < [self.localPolygon count]; i++) {
-		
-		CGPoint localPoint = [[self.localPolygon objectAtIndex:i] CGPointValue];
-		
-		CGPoint worldPoint = [self.sprite convertToWorldSpaceAR:localPoint];
-		
-		[self.worldPolygon replaceObjectAtIndex:i withObject:[NSValue valueWithCGPoint:worldPoint]];
-	}
+	[self.collisionPolygon updateFromSprite:self.sprite];
 }
 
 - (void)update:(ccTime)dt {
@@ -114,6 +115,13 @@ static const int STATE_LANDED = 4;
 		case STATE_FLYING:
 			
 			self.sprite.position = ccpAdd( self.sprite.position, ccpMult(self.heading, self.speed * dt) );
+			
+			// Explode if the ship leaves the world.
+			// TODO: Red ships should just become available for use, so things like audio won't trigger.
+			if (!CGRectContainsPoint(_worldBounds, self.sprite.position)) {
+				
+				[self changeState:STATE_DYING];
+			}
 			
 			break;
 			
@@ -136,12 +144,11 @@ static const int STATE_LANDED = 4;
 		{
 			float rotation = -CC_RADIANS_TO_DEGREES( ccpToAngle(self.heading) );
 
-			if (self.canLand && self.isHitLandingZone && self.isHitPlatform && (rotation >= LANDING_ANGLE_MIN) && (rotation <= LANDING_ANGLE_MAX)) {
+			if (self.canLand && self.isHitLandingZone && self.isHitPlatform && (rotation >= LANDING_ANGLE_MIN) && (rotation <= LANDING_ANGLE_MAX) && (self.speed <= LANDING_SPEED_MAX)) {
 
 				self.speed = 0.0f;
 				self.heading = ccp(1.0f, 0.0f);
 				self.sprite.rotation = 0.0f;
-				self.sprite.position = ccp(self.sprite.position.x, self.sprite.position.y - 2.0f); // HACK
 					
 				[self changeState:STATE_LANDED];
 			}

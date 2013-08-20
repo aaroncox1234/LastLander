@@ -19,7 +19,8 @@ static const int INPUT_BOOST = (1<<2);
 	CGFloat _leftScreenTouchThreshold;
 	CGFloat _rightScreenTouchThreshold;
 	
-	int _inputState;
+	int _inputSteerState;
+	int _inputBoostState;
 }
 
 - (id)init;
@@ -52,7 +53,7 @@ static const int INPUT_BOOST = (1<<2);
 	
 	if (self.ship.isLanded) {
 		
-		if (_inputState == INPUT_BOOST) {
+		if (_inputBoostState == INPUT_BOOST) {
 			
 			// The ship has to leave the current landing zone before it can land again.
 			self.ship.canLand = NO;
@@ -63,7 +64,7 @@ static const int INPUT_BOOST = (1<<2);
 	}
 	else {
 		
-		if (_inputState == INPUT_BOOST)	{
+		if (_inputBoostState == INPUT_BOOST)	{
 			
 			self.ship.speed = MIN(self.ship.speed + PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MAX);
 		}
@@ -72,11 +73,11 @@ static const int INPUT_BOOST = (1<<2);
 			self.ship.speed = MAX(self.ship.speed - PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MIN);
 		}
 		
-		if (_inputState == INPUT_STEER_CW) {
+		if (_inputSteerState == INPUT_STEER_CW) {
 				
 			[self.ship rotate:PLAYER_SHIP_TURN_RATE_DEGREES];
 		}
-		else if (_inputState == INPUT_STEER_CCW) {
+		else if (_inputSteerState == INPUT_STEER_CCW) {
 				
 			[self.ship rotate:-PLAYER_SHIP_TURN_RATE_DEGREES];
 		}
@@ -87,7 +88,7 @@ static const int INPUT_BOOST = (1<<2);
 			
 			if (!self.ship.isHitLandingZone) {
 				
-				self.ship.canLand = TRUE;
+				self.ship.canLand = YES;
 			}
 		}
 	}
@@ -102,21 +103,33 @@ static const int INPUT_BOOST = (1<<2);
 	
 	if (location.x < _leftScreenTouchThreshold) {
 		
-		_inputState = INPUT_STEER_CCW;
+		_inputSteerState = INPUT_STEER_CCW;
 	}
 	else if (location.x > _rightScreenTouchThreshold) {
 		
-		_inputState = INPUT_STEER_CW;
+		_inputSteerState = INPUT_STEER_CW;
 	}
 	else {
 		
-		_inputState = INPUT_BOOST;
+		_inputBoostState = INPUT_BOOST;
 	}
 }
 
 - (void)onScreenTouchEnd:(CGPoint)location {
 
-	_inputState = INPUT_NONE;
+	if ( self.ship == NULL) {
+		
+		return;
+	}
+	
+	if (location.x < _leftScreenTouchThreshold || location.x > _rightScreenTouchThreshold) {
+		
+		_inputSteerState = INPUT_NONE;
+	}
+	else {
+		
+		_inputBoostState = INPUT_NONE;
+	}
 }
 
 - (id)init {

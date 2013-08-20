@@ -50,6 +50,8 @@
 		[self schedule:@selector(update:)];
 		
 		self.touchEnabled = YES;
+		
+		[[CCDirector sharedDirector].openGLView setMultipleTouchEnabled:YES];
     }
 	
 	return self;
@@ -73,20 +75,22 @@
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	
-	UITouch *touch = [touches anyObject];
-    CGPoint location = [self convertTouchToNodeSpace:touch];
-    
-	[self.gameWorld onScreenTouchStart:location];
-	
-	CCLOG(@"Touch detected at (%f, %f)", location.x, location.y);
+	for (UITouch* touch in touches) {
+		
+		CGPoint location = [self convertTouchToNodeSpace:touch];
+		[self.gameWorld onScreenTouchStart:location];
+		
+		CCLOG(@"Touch detected at (%f, %f)", location.x, location.y);
+	}
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-	UITouch *touch = [touches anyObject];
-    CGPoint location = [self convertTouchToNodeSpace:touch];
-    
-	[self.gameWorld onScreenTouchEnd:location];
+	for (UITouch* touch in touches) {
+		
+		CGPoint location = [self convertTouchToNodeSpace:touch];
+		[self.gameWorld onScreenTouchEnd:location];
+	}
 }
 
 #pragma mark GameKit delegate
