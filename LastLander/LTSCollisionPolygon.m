@@ -7,6 +7,8 @@
 //
 
 #import "LTSCollisionPolygon.h"
+#import "LTSDebugDefines.h"
+#import "LTSCollisionDetection.h"
 
 static const int MAX_POINTS = 50;
 
@@ -59,7 +61,7 @@ static const int MAX_POINTS = 50;
 			CGPoint otherStartPoint = other->_worldPoints[otherIndex];
 			CGPoint otherEndPoint = other->_worldPoints[otherIndex+1];
 			
-			if (ccpSegmentIntersect(myStartPoint, myEndPoint, otherStartPoint, otherEndPoint)) {
+			if (testSegmentIntersection(myStartPoint, myEndPoint, otherStartPoint, otherEndPoint)) {
 				
 				return YES;
 			}

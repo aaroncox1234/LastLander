@@ -51,7 +51,7 @@
 		
 		self.touchEnabled = YES;
 		
-		[[CCDirector sharedDirector].openGLView setMultipleTouchEnabled:YES];
+		[[CCDirector sharedDirector].view setMultipleTouchEnabled:YES];
     }
 	
 	return self;
@@ -78,7 +78,7 @@
 	for (UITouch* touch in touches) {
 		
 		CGPoint location = [self convertTouchToNodeSpace:touch];
-		[self.gameWorld onScreenTouchStart:location];
+		[self.gameWorld onScreenTouchStart:location touchHash:[touch hash]];
 		
 		CCLOG(@"Touch detected at (%f, %f)", location.x, location.y);
 	}
@@ -89,7 +89,7 @@
 	for (UITouch* touch in touches) {
 		
 		CGPoint location = [self convertTouchToNodeSpace:touch];
-		[self.gameWorld onScreenTouchEnd:location];
+		[self.gameWorld onScreenTouchEnd:location touchHash:[touch hash]];
 	}
 }
 

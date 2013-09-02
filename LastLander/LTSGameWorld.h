@@ -33,8 +33,8 @@
 
 - (void)update:(ccTime)dt;
 
-- (void)onScreenTouchStart:(CGPoint)location;
-- (void)onScreenTouchEnd:(CGPoint)location;
+- (void)onScreenTouchStart:(CGPoint)location touchHash:(NSInteger *)hash;
+- (void)onScreenTouchEnd:(CGPoint)location touchHash:(NSInteger *)hash;
 
 - (BOOL)isFailed;
 

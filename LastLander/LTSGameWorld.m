@@ -11,8 +11,7 @@
 #import "LTSPlatform.h"
 #import "LTSRandom.h"
 #import "LTSDebugDrawLayer.h"
-
-#define DRAW_COLLISION_INFO 0
+#import "LTSDebugDefines.h"
 
 @interface LTSGameWorld ()
 {
@@ -86,6 +85,74 @@
 		
 		[self chooseNextRedShipSpawnTime];
 		
+#if DEBUG_LANDING
+		_playerController = [LTSShipController createShipController];
+		LTSShip *playerShip = [self findAvailableShipFrom:_blueShips];
+		
+		int testNum = 3;
+		
+		switch (testNum)
+		{
+			// Crash
+			case 0:
+			{
+				CGPoint spawnPosition = ccp(15.0f, 160.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:25.0f];
+				break;
+			}
+			// Shallow landing
+			case 1:
+			{
+				CGPoint spawnPosition = ccp(40.0f, 130.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:5.0f];
+				break;
+			}
+		    // Skid off the end
+			case 2:
+			{
+				CGPoint spawnPosition = ccp(40.0f, 145.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:10.0f];
+				break;
+			}
+			// Shallowish landing
+			case 3:
+			{
+				CGPoint spawnPosition = ccp(0.0f, 145.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:10.0f];
+				break;
+			}
+			// Normal landing
+			case 4:
+			{
+				CGPoint spawnPosition = ccp(40.0f, 160.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:20.0f];
+				break;
+			}
+			// Steep landing
+			case 5:
+			{
+				CGPoint spawnPosition = ccp(40.0f, 160.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:25.0f];
+				break;
+			}
+			// Steep crash
+			case 6:
+			{
+				CGPoint spawnPosition = ccp(60.0f, 180.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:40.0f];
+				break;
+			}
+			// No landing
+			case 7:
+			{
+				CGPoint spawnPosition = ccp(60.0f, 180.0f);
+				[playerShip spawnWithSpeed:PLAYER_SHIP_SPEED_MIN atSpawnPosition:spawnPosition withRotation:0.0f];
+				break;
+			}
+		}
+		
+		[_playerController SetControlledShip:playerShip];
+#else
 		// Start with a single spawned player ship. This might change in the future based on design decisions.
 		_playerController = [LTSShipController createShipController];
 		LTSShip *playerShip = [self findAvailableShipFrom:_blueShips];
@@ -93,6 +160,7 @@
 		[playerShip spawnWithSpeed:0.0f atSpawnPosition:spawnPosition];
 		[playerShip setLanded];
 		[_playerController SetControlledShip:playerShip];
+#endif
 	}
 	
 	return self;
@@ -107,17 +175,21 @@
 	[self respondToCollisions];
 }
 
-- (void)onScreenTouchStart:(CGPoint)location {
+- (void)onScreenTouchStart:(CGPoint)location touchHash:(NSInteger *)hash {
 	
-	[self.playerController onScreenTouchStart:location];
+	[self.playerController onScreenTouchStart:location touchHash:hash];
 }
 
-- (void)onScreenTouchEnd:(CGPoint)location {
+- (void)onScreenTouchEnd:(CGPoint)location touchHash:(NSInteger *)hash {
 	
-	[self.playerController onScreenTouchEnd:location];
+	[self.playerController onScreenTouchEnd:location touchHash:hash];
 }
 
 - (void)updateSpawning:(ccTime)dt {
+	
+#if DEBUG_DISABLE_RED_SHIP_SPAWNING
+	return;
+#endif
 	
 	// When the spawn interval elapses, reserve a red ship and display a warning blip where it will spawn.
 	
@@ -168,7 +240,7 @@
 	
 	for (LTSShip *ship in _ships) {
 		
-		[ship update:dt];
+		[ship update:dt gameWorld:self];
 	}
 	
 	for (LTSSpawnWarningBlip *redShipSpawnWarningBlip in _redShipWarningBlips) {
@@ -209,6 +281,7 @@
 		ship.isHitOtherShip = NO;
 		ship.isHitPlatform = NO;
 		ship.isHitLandingZone = NO;
+		ship.collidingLandingStrip = NULL;
 	}
 	
 	for (int shipIndex = 0; shipIndex < [_ships count]; shipIndex++) {
@@ -217,6 +290,10 @@
 		
 #if DRAW_COLLISION_INFO
 		[[LTSDebugDrawLayer getSharedInstance] drawPolygon:ship.collisionPolygon.worldPolygonAsArray];
+#endif
+		
+#if DRAW_LANDING_INFO
+		[[LTSDebugDrawLayer getSharedInstance] drawLineFrom:ship.bottom.worldStart to:ship.bottom.worldEnd];
 #endif
 		
 		for (int otherShipIndex = shipIndex + 1; otherShipIndex < [_ships count]; otherShipIndex++) {
@@ -238,10 +315,19 @@
 			[[LTSDebugDrawLayer getSharedInstance] drawPolygon:platform.collisionPolygon.worldPolygonAsArray];
 			[[LTSDebugDrawLayer getSharedInstance] drawRectangle:platform.landingZone];
 #endif
+
+#if DRAW_LANDING_INFO
+			[[LTSDebugDrawLayer getSharedInstance] drawLineFrom:platform.landingStrip.worldStart to:platform.landingStrip.worldEnd];
+#endif
 			
 			if ([ship.collisionPolygon isIntersecting:platform.collisionPolygon]) {
 				
 				ship.isHitPlatform = YES;
+			}
+			
+			if ([ship.bottom isIntersecting:platform.landingStrip]) {
+				
+				ship.collidingLandingStrip = platform.landingStrip;
 			}
 			
 			if (CGRectIntersectsRect(ship.sprite.boundingBox, platform.landingZone)) {

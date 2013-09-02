@@ -10,10 +10,12 @@
 		AC3B05B91777D61B009FE384 /* LTSPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3B05B81777D61B009FE384 /* LTSPlatform.m */; };
 		AC3B05EF17853F72009FE384 /* LTSRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3B05EE17853F72009FE384 /* LTSRandom.m */; };
 		AC42586917B611AC00BA7F20 /* LTSCollisionPolygon.m in Sources */ = {isa = PBXBuildFile; fileRef = AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */; };
+		AC42588B17C32CA600BA7F20 /* LTSCollisionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = AC42588A17C32CA500BA7F20 /* LTSCollisionSegment.m */; };
 		AC43AA771763D55100E612EE /* LTSGameplaySpriteSheet1.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */; };
 		AC43AA781763D55100E612EE /* LTSGameplaySpriteSheet1.png in Resources */ = {isa = PBXBuildFile; fileRef = AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */; };
 		AC5BCBF8175F067500FC3BF0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */; };
 		AC5BCC061763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */; };
+		AC9B0A1A17D5507B008C8056 /* LTSParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9B0A1917D5507B008C8056 /* LTSParticleSystem.m */; };
 		AC9DBC0317AB632B00100BCF /* LTSSpawnWarningBlip.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */; };
 		AC9DBC0617AEEEC900100BCF /* LTSExplosion.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */; };
 		AC9DBC0917AF034B00100BCF /* LTSGameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9DBC0817AF034A00100BCF /* LTSGameLayer.m */; };
@@ -170,10 +172,16 @@
 		AC3B05EE17853F72009FE384 /* LTSRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSRandom.m; sourceTree = "<group>"; };
 		AC42586717B611AB00BA7F20 /* LTSCollisionPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCollisionPolygon.h; sourceTree = "<group>"; };
 		AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCollisionPolygon.m; sourceTree = "<group>"; };
+		AC42588817C3232800BA7F20 /* LTSDebugDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSDebugDefines.h; sourceTree = "<group>"; };
+		AC42588917C32CA500BA7F20 /* LTSCollisionSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSCollisionSegment.h; sourceTree = "<group>"; };
+		AC42588A17C32CA500BA7F20 /* LTSCollisionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSCollisionSegment.m; sourceTree = "<group>"; };
 		AC43AA751763D55100E612EE /* LTSGameplaySpriteSheet1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = LTSGameplaySpriteSheet1.plist; sourceTree = "<group>"; };
 		AC43AA761763D55100E612EE /* LTSGameplaySpriteSheet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LTSGameplaySpriteSheet1.png; sourceTree = "<group>"; };
 		AC5BCBF7175F067500FC3BF0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC5BCC051763C4FB00FC3BF0 /* libisimulate-4.x-opengl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libisimulate-4.x-opengl.a"; path = "libs/iSimulate/libisimulate-4.x-opengl.a"; sourceTree = "<group>"; };
+		AC9B0A1717C74198008C8056 /* LTSCollisionDetection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTSCollisionDetection.h; sourceTree = "<group>"; };
+		AC9B0A1817D5507A008C8056 /* LTSParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSParticleSystem.h; sourceTree = "<group>"; };
+		AC9B0A1917D5507B008C8056 /* LTSParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSParticleSystem.m; sourceTree = "<group>"; };
 		AC9DBC0117AB632B00100BCF /* LTSSpawnWarningBlip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSSpawnWarningBlip.h; sourceTree = "<group>"; };
 		AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTSSpawnWarningBlip.m; sourceTree = "<group>"; };
 		AC9DBC0417AEEEC800100BCF /* LTSExplosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTSExplosion.h; sourceTree = "<group>"; };
@@ -504,26 +512,32 @@
 		AC5BCBFF17603EDC00FC3BF0 /* LTS Gameplay */ = {
 			isa = PBXGroup;
 			children = (
-				ACB4FFB617700DA200349646 /* LTSGameWorld.h */,
-				ACB4FFB717700DA200349646 /* LTSGameWorld.m */,
-				ACB4FFB917700EDA00349646 /* LTSShip.h */,
-				ACB4FFBA17700EDA00349646 /* LTSShip.m */,
+				AC42586717B611AB00BA7F20 /* LTSCollisionPolygon.h */,
+				AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */,
+				AC42588917C32CA500BA7F20 /* LTSCollisionSegment.h */,
+				AC42588A17C32CA500BA7F20 /* LTSCollisionSegment.m */,
 				ACB4FFBC17701D3600349646 /* LTSConstants.h */,
 				ACB4FFBD17701D3700349646 /* LTSConstants.m */,
+				AC42588817C3232800BA7F20 /* LTSDebugDefines.h */,
+				AC9DBC0417AEEEC800100BCF /* LTSExplosion.h */,
+				AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */,
+				ACB4FFB617700DA200349646 /* LTSGameWorld.h */,
+				ACB4FFB717700DA200349646 /* LTSGameWorld.m */,
 				ACB4FFC11777C2BF00349646 /* LTSLevel.h */,
 				ACB4FFC21777C2BF00349646 /* LTSLevel.m */,
 				AC3B05B71777D61B009FE384 /* LTSPlatform.h */,
 				AC3B05B81777D61B009FE384 /* LTSPlatform.m */,
 				AC3B05ED17853F72009FE384 /* LTSRandom.h */,
 				AC3B05EE17853F72009FE384 /* LTSRandom.m */,
-				AC9DBC0117AB632B00100BCF /* LTSSpawnWarningBlip.h */,
-				AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */,
-				AC9DBC0417AEEEC800100BCF /* LTSExplosion.h */,
-				AC9DBC0517AEEEC800100BCF /* LTSExplosion.m */,
+				ACB4FFB917700EDA00349646 /* LTSShip.h */,
+				ACB4FFBA17700EDA00349646 /* LTSShip.m */,
 				AC9DBC0E17AF129E00100BCF /* LTSShipController.h */,
 				AC9DBC0F17AF129F00100BCF /* LTSShipController.m */,
-				AC42586717B611AB00BA7F20 /* LTSCollisionPolygon.h */,
-				AC42586817B611AC00BA7F20 /* LTSCollisionPolygon.m */,
+				AC9DBC0117AB632B00100BCF /* LTSSpawnWarningBlip.h */,
+				AC9DBC0217AB632B00100BCF /* LTSSpawnWarningBlip.m */,
+				AC9B0A1717C74198008C8056 /* LTSCollisionDetection.h */,
+				AC9B0A1817D5507A008C8056 /* LTSParticleSystem.h */,
+				AC9B0A1917D5507B008C8056 /* LTSParticleSystem.m */,
 			);
 			name = "LTS Gameplay";
 			sourceTree = "<group>";
@@ -594,8 +608,8 @@
 				AC9DCE6017362ECB00B1A7A5 /* AppDelegate.m */,
 				AC9DCE6517362ECB00B1A7A5 /* IntroLayer.h */,
 				AC9DCE6617362ECB00B1A7A5 /* IntroLayer.m */,
-				AC9DCCEA17362EC900B1A7A5 /* libs */,
 				AC9DCCD217362EC900B1A7A5 /* Resources */,
+				AC9DCCEA17362EC900B1A7A5 /* libs */,
 				AC9DCE5B17362ECB00B1A7A5 /* Supporting Files */,
 			);
 			path = LastLander;
@@ -1206,6 +1220,8 @@
 				AC9DBC0917AF034B00100BCF /* LTSGameLayer.m in Sources */,
 				AC9DBC1017AF129F00100BCF /* LTSShipController.m in Sources */,
 				AC42586917B611AC00BA7F20 /* LTSCollisionPolygon.m in Sources */,
+				AC42588B17C32CA600BA7F20 /* LTSCollisionSegment.m in Sources */,
+				AC9B0A1A17D5507B008C8056 /* LTSParticleSystem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

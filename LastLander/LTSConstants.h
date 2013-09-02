@@ -31,6 +31,9 @@ extern const float LANDING_SPEED_MAX;
 extern const float LANDING_ANGLE_MIN;
 extern const float LANDING_ANGLE_MAX;
 
+extern const float LANDING_DECELERATION;
+extern const float LANDING_SETTLE_ROTATION_ACCELERATION;
+
 extern const float SPAWN_WARNING_BLIP_DURATION;
 
 extern const int Z_ORDER_BACKGROUND;

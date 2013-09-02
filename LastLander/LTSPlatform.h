@@ -10,12 +10,14 @@
 #import "cocos2d.h"
 
 #import "LTSCollisionPolygon.h"
+#import "LTSCollisionSegment.h"
 
 @interface LTSPlatform : NSObject
 
 @property (nonatomic, readonly, strong) CCSprite *sprite;
 
 @property (nonatomic, readonly, strong)	LTSCollisionPolygon *collisionPolygon;
+@property (nonatomic, readonly, strong) LTSCollisionSegment *landingStrip;
 
 @property (nonatomic, readonly) CGRect landingZone;
 

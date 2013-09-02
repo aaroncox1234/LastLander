@@ -18,5 +18,6 @@
 
 - (void)drawPolygon:(NSArray *)polygon;
 - (void)drawRectangle:(CGRect)rectangle;
+- (void)drawLineFrom:(CGPoint)start to:(CGPoint)end;
 
 @end

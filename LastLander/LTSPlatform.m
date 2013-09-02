@@ -11,7 +11,7 @@
 
 @interface LTSPlatform ()
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon landingZone:(CGRect)localLandingZone;
+- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon landingStrip:(LTSCollisionSegment *)landingStrip landingZone:(CGRect)localLandingZone;
 
 @end
 
@@ -25,8 +25,8 @@
 	[batchNode addChild:sprite];
 	
 	LTSCollisionPolygon *polygon = [[LTSCollisionPolygon alloc] init];
-	[polygon addPoint:CGPointMake(48.7f, 73.6f)];
-	[polygon addPoint:CGPointMake(-48.8f, 73.1f)];
+	[polygon addPoint:CGPointMake(48.7f, 73.0f)];
+	[polygon addPoint:CGPointMake(-48.8f, 73.0f)];
 	[polygon addPoint:CGPointMake(-32.6f, 47.3f)];
 	[polygon addPoint:CGPointMake(-30.3f, 21.5f)];
 	[polygon addPoint:CGPointMake(-27.1f, 20.0f)];
@@ -66,9 +66,11 @@
 	[polygon addPoint:CGPointMake(48.7f, 67.1f)];
 	[polygon addPoint:CGPointMake(48.0f, 72.5f)];
 	
+	LTSCollisionSegment *landingStrip = [LTSCollisionSegment createSegmentFrom:ccp(48.7f, 73.0f) to:ccp(-48.8f, 73.0f)];
+	
 	CGRect landingZone = CGRectMake(-50.0f, 72.0f, 100.0f, 10.0f);
 	
-	return [[self alloc] initWithSprite:sprite polygon:polygon landingZone:landingZone];
+	return [[self alloc] initWithSprite:sprite polygon:polygon landingStrip:landingStrip landingZone:landingZone];
 }
 
 + (LTSPlatform *)createPlatform2WithBatchNode:(CCSpriteBatchNode *)batchNode position:(CGPoint)position {
@@ -104,9 +106,11 @@
 	[polygon addPoint:CGPointMake(30.7f, 33.8f)];
 	[polygon addPoint:CGPointMake(30.8f, 38.2f)];
 	
+	LTSCollisionSegment *landingStrip = [LTSCollisionSegment createSegmentFrom:ccp(31.5f, 38.7f) to:ccp(-31.1f, 38.5f)];
+	
 	CGRect landingZone = CGRectMake(-32.0f, 37.0f, 64.0f, 10.0f);
 	
-	return [[self alloc] initWithSprite:sprite polygon:polygon landingZone:landingZone];
+	return [[self alloc] initWithSprite:sprite polygon:polygon landingStrip:landingStrip landingZone:landingZone];
 }
 
 + (LTSPlatform *)createPlatform3WithBatchNode:(CCSpriteBatchNode *)batchNode position:(CGPoint)position {
@@ -156,12 +160,14 @@
 	[polygon addPoint:CGPointMake(35.8f, 55.3f)];
 	[polygon addPoint:CGPointMake(34.9f, 60.4f)];
     
+	LTSCollisionSegment *landingStrip = [LTSCollisionSegment createSegmentFrom:ccp(35.7f, 61.1f) to:ccp(-35.5f, 61.4f)];
+	
 	CGRect landingZone = CGRectMake(-37.0f, 60.0f, 75.0f, 10.0f);
 	
-	return [[self alloc] initWithSprite:sprite polygon:polygon landingZone:landingZone];
+	return [[self alloc] initWithSprite:sprite polygon:polygon landingStrip:landingStrip landingZone:landingZone];
 }
 
-- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon landingZone:(CGRect)localLandingZone {
+- (id)initWithSprite:(CCSprite *)sprite polygon:(LTSCollisionPolygon *)polygon landingStrip:(LTSCollisionSegment *)landingStrip landingZone:(CGRect)localLandingZone {
 	
 	self = [super init];
 	
@@ -171,6 +177,9 @@
 		
 		_collisionPolygon = polygon;
 		[_collisionPolygon updateFromSprite:sprite];
+		
+		_landingStrip = landingStrip;
+		[_landingStrip updateFromSprite:sprite];
 		
 		_landingZone.origin = [_sprite convertToWorldSpaceAR:localLandingZone.origin];
 		_landingZone.size = localLandingZone.size;

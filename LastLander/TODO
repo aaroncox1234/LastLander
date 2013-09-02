@@ -1,11 +1,5 @@
 PHASE 1 - Ship Control
 
-PROBLEMS
-	* Red ships eventually stop spawning
-	* Player ship sometimes gets stuck inside platform
-	* Framerate is inconsistent
-
-
 Audio
 	(from touch):     //[[SimpleAudioEngine sharedEngine] playEffect:@"pew-pew-lei.caf"];
 	(from gamelay init, move to level) //[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"background-music-aac.caf"];

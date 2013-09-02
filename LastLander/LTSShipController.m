@@ -21,6 +21,9 @@ static const int INPUT_BOOST = (1<<2);
 	
 	int _inputSteerState;
 	int _inputBoostState;
+	
+	NSInteger *_inputSteerTouchHash;
+	NSInteger *_inputBoostTouchHash;
 }
 
 - (id)init;
@@ -60,6 +63,9 @@ static const int INPUT_BOOST = (1<<2);
 			
 			[self.ship setSpeed:PLAYER_SHIP_SPEED_MIN];
 			[self.ship setFlying];
+			
+			_inputBoostState = INPUT_NONE;
+			_inputBoostTouchHash = -1;
 		}
 	}
 	else {
@@ -68,18 +74,21 @@ static const int INPUT_BOOST = (1<<2);
 			
 			self.ship.speed = MIN(self.ship.speed + PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MAX);
 		}
-		else {
+		// TODO: it's not very nice how Ship and ShipController can fight over speed...
+		else if (self.ship.collidingLandingStrip == NULL) {
 			
 			self.ship.speed = MAX(self.ship.speed - PLAYER_SHIP_SPEED_BOOST_RATE, PLAYER_SHIP_SPEED_MIN);
 		}
 		
+		float rotation = PLAYER_SHIP_TURN_RATE_DEGREES * dt;
+		
 		if (_inputSteerState == INPUT_STEER_CW) {
 				
-			[self.ship rotate:PLAYER_SHIP_TURN_RATE_DEGREES];
+			[self.ship rotate:rotation];
 		}
 		else if (_inputSteerState == INPUT_STEER_CCW) {
 				
-			[self.ship rotate:-PLAYER_SHIP_TURN_RATE_DEGREES];
+			[self.ship rotate:-rotation];
 		}
 		
 		// Assumption: The ship can't land because it's still in its initial landing zone.
@@ -94,7 +103,7 @@ static const int INPUT_BOOST = (1<<2);
 	}
 }
 
-- (void)onScreenTouchStart:(CGPoint)location {
+- (void)onScreenTouchStart:(CGPoint)location touchHash:(NSInteger *)hash {
 	
 	if ( self.ship == NULL) {
 		
@@ -104,31 +113,36 @@ static const int INPUT_BOOST = (1<<2);
 	if (location.x < _leftScreenTouchThreshold) {
 		
 		_inputSteerState = INPUT_STEER_CCW;
+		_inputSteerTouchHash = hash;
 	}
 	else if (location.x > _rightScreenTouchThreshold) {
 		
 		_inputSteerState = INPUT_STEER_CW;
+		_inputSteerTouchHash = hash;
 	}
 	else {
 		
 		_inputBoostState = INPUT_BOOST;
+		_inputBoostTouchHash = hash;
 	}
 }
 
-- (void)onScreenTouchEnd:(CGPoint)location {
+- (void)onScreenTouchEnd:(CGPoint)location touchHash:(NSInteger *)hash {
 
 	if ( self.ship == NULL) {
 		
 		return;
 	}
 	
-	if (location.x < _leftScreenTouchThreshold || location.x > _rightScreenTouchThreshold) {
+	if (hash == _inputSteerTouchHash) {
 		
 		_inputSteerState = INPUT_NONE;
+		_inputSteerTouchHash = -1;
 	}
-	else {
+	else if (hash == _inputBoostTouchHash) {
 		
 		_inputBoostState = INPUT_NONE;
+		_inputBoostTouchHash = -1;
 	}
 }
 
@@ -139,6 +153,9 @@ static const int INPUT_BOOST = (1<<2);
 	if (self) {
 		
 		_ship = NULL;
+		
+		_inputSteerTouchHash = -1;
+		_inputBoostTouchHash = -1;
 		
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		_leftScreenTouchThreshold = winSize.width * SCREEN_SIDE_TOUCH_THRESHOLD_PERCENT;

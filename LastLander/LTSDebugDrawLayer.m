@@ -18,6 +18,8 @@
 {
 	NSMutableArray *_polygons;
 	NSMutableArray *_rectangles;
+	NSMutableArray *_lineStarts;
+	NSMutableArray *_lineEnds;
 }
 
 
@@ -44,6 +46,8 @@
 		
 		_polygons = [NSMutableArray array];
 		_rectangles = [NSMutableArray array];
+		_lineStarts = [NSMutableArray array];
+		_lineEnds = [NSMutableArray array];
 	}
 	
 	return self;
@@ -57,6 +61,12 @@
 - (void)drawRectangle:(CGRect)rectangle {
 	
 	[_rectangles addObject:[NSValue valueWithCGRect:rectangle]];
+}
+
+- (void)drawLineFrom:(CGPoint)start to:(CGPoint)end {
+	
+	[_lineStarts addObject:[NSValue valueWithCGPoint:start]];
+	[_lineEnds addObject:[NSValue valueWithCGPoint:end]];
 }
 
 - (void)draw {
@@ -94,21 +104,22 @@
 		ccDrawRect( rectangle.origin, destination );
 	}
 	
-	for (NSArray *polygon in _polygons) {
+	[_rectangles removeAllObjects];
+	
+	// Lines
+	
+	ccDrawColor4F(1.0f, 1.0f, 0.0f, 1.0f);
+	
+	for (int i = 0; i < [_lineStarts count]; i++) {
 		
-		for (int startIdx = 0; startIdx < [polygon count]; startIdx++) {
-			
-			int endIdx = startIdx + 1;
-			if (endIdx >= [polygon count]) {
-				
-				endIdx = 0;
-			}
-			
-			ccDrawLine([[polygon objectAtIndex:startIdx] CGPointValue], [[polygon objectAtIndex:endIdx] CGPointValue]);
-		}
+		CGPoint start = [[_lineStarts objectAtIndex:i] CGPointValue];
+		CGPoint end = [[_lineEnds objectAtIndex:i] CGPointValue];
+		
+		ccDrawLine(start, end);
 	}
 	
-	[_rectangles removeAllObjects];
+	[_lineStarts removeAllObjects];
+	[_lineEnds removeAllObjects];
 }
 
 @end
